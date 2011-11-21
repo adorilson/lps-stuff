@@ -1,0 +1,151 @@
+% ------------------------------------------------------------------------------
+% Palestra: Mecanismos para controle de variabilidades em aplicações para Android
+% Autores:
+%     Adorilson Bezerra <adorilson@gmail.com>
+% Licença Creative Commons Atribuição 3.0. 
+% Você pode usar e alterar este documento, 
+% mas deve obrigatoriamente citar a autoria. 
+% ------------------------------------------------------------------------------
+
+\documentclass{beamer}
+
+% ------------------------------------------------------------------------------
+\usepackage[latin1]{inputenc}
+\usepackage[brazil]{babel}
+\usepackage{graphicx}
+\usepackage{beamerthemesplit}
+\usepackage{ae}
+\usepackage{alltt}
+\usepackage{pslatex}
+% ------------------------------------------------------------------------------
+
+\usecolortheme{beaver}
+
+% ------------------------------------------------------------------------------
+\title[Mecanismos para controle de variabilidades em aplicações para Android]
+{
+    Mecanismos para controle de variabilidades em aplicações para Android
+}
+\subtitle{}
+\author[Adorilson Bezerra]
+{
+    Adorilson Bezerra
+}
+\institute{Universidade Federal do Rio Grande do Norte\\Departamento de Informática e Matemática Aplicada}
+\date{\today}
+%\logo{\includegraphics[scale=0.2]{img/android}}
+% ------------------------------------------------------------------------------
+
+\begin{document}
+
+% ------------------------------------------------------------------------------
+\frame{\titlepage}
+% ------------------------------------------------------------------------------
+
+\section{Introdução}
+    \frame
+    {
+        \frametitle{Variabilidades em aplicações para Android}
+        \begin{itemize}
+            \item Versão da API
+            
+            \item Dispositivos com ou sem sensores
+            \item Gráficos 2D ou 3D
+            \item Mecanismo de interação
+            \item Pacote de compatibilidade
+            \item Versão da OpenGL ES
+            \item Android NDK
+            
+            \item Tamanhos e densidade das telas
+            \item Línguas internacionais
+        \end{itemize}
+    }
+\section{Desenvolvimento}
+    \frame
+    {
+        \frametitle{Versão da API}
+        \begin{itemize}
+            \item Reflexão
+        \end{itemize}
+        \begin{figure}[t]
+		    \includegraphics[scale=0.5]{img/reflect1.png}
+		\end{figure}
+    }
+    \frame
+    {
+        \frametitle{Versão da API}
+        \begin{figure}[t]
+		    \includegraphics[scale=0.5]{img/reflect2.png}
+		\end{figure}
+    }
+    \frame
+    {
+        \frametitle{Versão da API}
+        \begin{itemize}
+            \item Classe wrapper
+        \end{itemize}
+        \begin{figure}[t]
+		    \includegraphics[scale=0.5]{img/wrapper1.png}
+		\end{figure}
+    }
+    \frame
+    {
+        \frametitle{Versão da API}
+        \begin{figure}[t]
+		    \includegraphics[scale=0.5]{img/wrapper2.png}
+		\end{figure}
+    }
+    \frame
+    {
+        \frametitle{Versão da API}
+        \begin{figure}[t]
+		    \includegraphics[scale=0.5]{img/wrapper3.png}
+		\end{figure}
+    }
+    \frame
+    {
+        \frametitle{Versão da API}
+        \begin{itemize}
+            \item Checando versão exata em tempo de execução
+        \end{itemize}
+        \begin{figure}[t]
+		    \includegraphics[scale=0.5]{img/versao.png}
+		\end{figure}
+    }
+    \frame
+    {
+        \frametitle{Mesmo(s) mecanismo(s) anterior(es)}
+        \begin{itemize}
+            \item Dispositivos com ou sem sensores
+            \item Gráficos 2D ou 3D
+            \item Mecanismo de interação
+            \item Pacote de compatibilidade
+            \item Versão da OpenGL ES
+            \item Android NDK
+        \end{itemize}
+        \begin{quote}
+            A API fornece o método PackageManager.hasSystemFeature()
+        \end{quote}
+    }
+    \frame
+    {
+        \frametitle{São transparentes para o desenvolvedor}
+        \begin{itemize}
+            \item Tamanhos e densidade das telas
+            \item Línguas internacionais 
+        \end{itemize}
+        \begin{figure}[t]
+		    \includegraphics[scale=0.5]{img/estrutura.png}
+		\end{figure}
+    }
+\section{Conclusão}
+   \frame
+    {
+        \frametitle{Referências}
+        \begin{itemize}
+            \item http://android-developers.blogspot.com/2009/04/backward-compatibility-for-android.html
+            \item http://android-developers.blogspot.com/2010/07/how-to-have-your-cupcake-and-eat-it-too.html
+            \item http://android-developers.blogspot.com/2010/06/making-sense-of-multitouch.html
+        \end{itemize}
+    }
+\end{document}

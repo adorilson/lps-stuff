@@ -1,0 +1,158 @@
+
+Anotações aleatórias e talvez com pouco sentido... :p
+
+
+Compatibility Package
+
+Minimum API level supported: 4
+
+The Compatibility Package includes static "support libraries" that you can add to your Android application in order to use APIs that are either not available for older platform versions or that offer "utility" APIs that aren't a part of the framework APIs. The goal is to simplify your development by offering more APIs that you can bundle with your application so you can worry less about platform versions.
+
+Note: The Compatibility Package includes more than one support library. Each one has a different minimum API level. For example, one library requires API level 4 or higher, while another requires API level 13 or higher. The minimum version is indicated by the directory name, such as v4/ and v13/.
+
+http://developer.android.com/sdk/compatibility-library.html
+
+----
+
+public class FrameLayout
+
+FrameLayout is designed to block out an area on the screen to display a single item. Generally, FrameLayout should be used to hold a single child view, because it can be difficult to organize child views in a way that's scalable to different screen sizes without the children overlapping each other. You can, however, add multiple children to a FrameLayout and control their position within the FrameLayout by assigning gravity to each child, using the android:layout_gravity attribute.
+
+Child views are drawn in a stack, with the most recently added child on top. The size of the FrameLayout is the size of its largest child (plus padding), visible or not (if the FrameLayout's parent permits). Views that are GONE are used for sizing only if setConsiderGoneChildrenWhenMeasuring() is set to true.
+
+http://developer.android.com/reference/android/widget/FrameLayout.html
+
+----------
+
+Android NDK
+
+The Android NDK is a companion tool to the Android SDK that lets you build performance-critical portions of your apps in native code. It provides headers and libraries that allow you to build activities, handle user input, use hardware sensors, access application resources, and more, when programming in C or C++. If you write native code, your applications are still packaged into an .apk file and they still run inside of a virtual machine on the device. The fundamental Android application model does not change.
+
+What is the NDK?
+
+The Android NDK is a toolset that lets you embed components that make use of native code in your Android applications.
+
+Android applications run in the Dalvik virtual machine. The NDK allows you to implement parts of your applications using native-code languages such as C and C++. This can provide benefits to certain classes of applications, in the form of reuse of existing code and in some cases increased speed.
+
+The latest release of the NDK supports these ARM instruction sets:
+
+    ARMv5TE (including Thumb-1 instructions)
+    ARMv7-A (including Thumb-2 and VFPv3-D16 instructions, with optional support for NEON/VFPv3-D32 instructions)
+    x86 instructions (see CPU-ARCH-ABIS.HTML for more information)
+
+http://developer.android.com/sdk/ndk/overview.html
+
+--------------
+
+New Tools For Managing Screen Sizes 
+
+http://android-developers.blogspot.com/2011/07/new-tools-for-managing-screen-sizes.html
+
+------------
+
+Google Group: android-porting
+http://groups.google.com/group/android-porting
+
+------------
+
+PhoneGap
+
+PhoneGap is an HTML5 app platform that allows you to author native applications with web technologies and get access to APIs and app stores. PhoneGap leverages web technologies developers already know best... HTML and JavaScript.
+http://www.phonegap.com/
+
+----------
+
+Supporting Multiple Screens
+
+http://developer.android.com/guide/practices/screens_support.html
+
+
+-------------
+
+Android Forums
+
+http://androidforums.com/
+
+
+-------------------
+
+Android :: Portability Among Mobile Platforms
+
+http://android.bigresource.com/Android-Portability-among-mobile-platforms-syJ1Fxvlb.html
+
+
+-----------
+From Software Product Lines to Software Ecosystems
+
+http://www.janbosch.com/Jan_Bosch/Composition_files/SPLC09-SoftwareEcosystems-Accepted.pdf
+
+------------
+
+The Android mobile platform (by Benjamin Speckmann)
+A Review Paper Submitted to the Eastern Michigan University
+Department of Computer Science
+In Partial Fulfillment of the Requirements for the
+Master of Science in Computer Science
+131p.
+
+http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.175.2961&rep=rep1&type=pdf
+
+-----------
+
+Eventos pesquisados (entre outros)
+
+http://www.re10.org/
+http://www.re09.org/
+http://selab.fbk.eu/issta2010/index.php
+http://soft.vub.ac.be/ase2010/start
+http://www.csc2.ncsu.edu/conferences/esem/index.php
+http://www.ksi.edu/seke/seke10.html
+http://www.ksi.edu/seke/seke09.html
+http://cms.brookes.ac.uk/staff/HongZhu/QSIC2008/
+
+
+========= Variabilidades dos dispositivos com Android =========
+
+Acelerometro: SIM ou NAO 
+    https://github.com/eburke/android_game_examples/blob/master/GameExamples/src/com/stuffthathappens/games/Accel.java#L64
+
+Diversos tipos de sensores: 
+    http://developer.android.com/reference/android/hardware/Sensor.html
+
+Gráficos: 2D ou 3D
+    https://github.com/senchalabs/jQTouch/blob/master/jqtouch/jqtouch.js#L879
+    http://developer.android.com/guide/topics/graphics/index.html
+
+Tamanhos da tela: small, normal, large, xlarge
+
+Densidade da tela: ldpi, mdpi, hdpi, xhdpi, nodpi, tvdpi
+    http://developer.android.com/guide/practices/screens_support.html
+    http://www.androidbrasilprojetos.org/android/design-para-dispositivos-android-dica-de-leitura/
+    http://www.klebermota.eti.br/2011/09/02/suporte-a-multiplas-telas-no-android/
+
+Idioma da aplicação: devem ser criadas vários strings-LO.xml onde LO é a sigla do idioma
+
+Código nativo:
+    http://developer.android.com/sdk/ndk/index.html
+
+Teclado customizado: ??? ver SDK
+
+Fontes: ???
+    https://github.com/dVyper/AndroidGame1/blob/master/GameFont.as
+
+Permissão de acesso para os recursos do aparelho: internet, camera, external storage etc... ???
+    https://github.com/TheRealKerni/HockeyKit/tree/develop/client/Android
+
+Integração com outros app: ???
+    https://github.com/TheRealKerni/HockeyKit/tree/develop/client/Android     
+
+Estilos (semelhante a CSS):
+    http://www.androidbrasilprojetos.org/android/o-seu-tela-tem-estilo/
+
+Coisas que definidas no AndroidManifest.xml ???
+    Talvez algum parametros desse arquivo possam ser automatizados
+
+
+custom ROM (baixaria):
+    http://www.androidpolice.com/2010/05/01/custom-roms-for-android-explained-and-why-you-want-them/
+
