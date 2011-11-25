@@ -1,23 +1,29 @@
 - Contribuições
 
-The main contribution of this article is to bring together previously–scattered studies to set the basis for future research as well as introduce new researchers and practitioners in this thriving area.
+Unificar estudos que haviam sidos feitos separadamente, definindo a base para pesquisas futuras e introduzindo novos pesquisadores e profissionais na área. 
 
-We present a conceptual framework to understand the different proposals and classify new contributions in the future.
+Definição de um framework utilizado para analisar os diferentes propostas e classificar novas abordagens no futuro
 
+Inédita pesquisa sobre operações, técnicas, ferramentas e resultados empíricos apresentadas pela literatura
 
-The literature on this topic has contributed with a set of operations, techniques, tools and empirical results which have not been surveyed until now.
+Discussão dos diferentes estudos e apresentação de desafios para trabalhos futuros
 
-This paper provides a comprehensive literature review on the automated analysis of feature models 20 years after of their invention. This paper contributes by bringing together previously-disparate streams of work to help shed light on this thriving area. 
-
-We also present a conceptual framework to understand the different proposals as well as categorise future contributions. 
-
-We finally discuss the different studies and propose some challenges to be faced in the future.
-
+Levantamento das operações sobre FM e quando cada uma é útil
 
 - Pontos positivos
 
-Clareza da contribuiçao do artigo
+Clareza da contribuição do artigo
 Definição do conteúdo de cada seção. Particularmente útil para o tamanho do artigo
 Definição da metodologia da revisão
 
 - Pontos negativos
+
+Capítulo 6
+
+
+- Dúvidas
+Relações entre FM: Refatoring?
+
+Exemplo da feature morta condicional
+
+unique features ?
