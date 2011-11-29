@@ -1,0 +1,26 @@
+Contribuições
+
+- Analise dos efeitos da granulidade de features em LPSs
+- Apresentação de uma ferramenta que permite implementar features com granularidade fina e grossa de uma maneira concisa.
+- Mostra como CIDE simplifica o desenvolvimento comparados a abordagens tradicionais
+
+Problema das abordagens tradicionais: 
+- composição
+- anotação (figura 5)
+
+Qual a diferença entre herança OO e refinamento no Jak ?
+
+Pontos positivos
+CIDE: não polui o código-fonte ()
+
+Pontos negativos
+Estudos de casos distintos
+
+Observações
+
+Adicionar um comando no meio de um método requer workrounds ou ofuscamento do código base com anotações
+
+Sobreposição de métodos?
+
+Linguagens dinâmicas?
+
