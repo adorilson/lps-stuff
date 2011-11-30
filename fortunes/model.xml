@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel chosenLayoutAlgorithm="1">
+		<struct>
+			<and abstract="true" mandatory="true" name="Fortunes">
+				<alt abstract="true" mandatory="true" name="Versão">
+					<and mandatory="true" name="Online">
+						<feature name="Doação"/>
+					</and>
+					<and mandatory="true" name="Offline">
+						<feature name="Propaganda"/>
+					</and>
+				</alt>
+				<or abstract="true" name="Compartilhamento">
+					<feature mandatory="true" name="Email"/>
+					<feature mandatory="true" name="SMS"/>
+					<feature mandatory="true" name="Twitter"/>
+					<feature mandatory="true" name="Facebook"/>
+				</or>
+				<alt abstract="true" name="Fonte">
+					<feature mandatory="true" name="Internet"/>
+					<feature mandatory="true" name="BancoDados"/>
+				</alt>
+				<or abstract="true" name="Tela">
+					<feature mandatory="true" name="Paisagem"/>
+					<feature mandatory="true" name="Retrato"/>
+				</or>
+				<feature name="Fundo"/>
+				<or abstract="true" name="Categorias">
+					<feature mandatory="true" name="Religiao"/>
+					<feature mandatory="true" name="Politica"/>
+					<feature mandatory="true" name="Futebol"/>
+					<feature mandatory="true" name="Etc"/>
+				</or>
+			</and>
+		</struct>
+		<constraints/>
+		<comments/>
+		<featureOrder userDefined="false"/>
+	</featureModel>
