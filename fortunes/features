@@ -28,3 +28,33 @@ Fortunes
 + A fortune deve ser exibida em no máximo 3 linhas (20)
 + Compatível com várias versões do Android (21)
     + Android 1.6 é o requisito mínimo
+
+
+=== Mecanismos de controle das variabilidades ===
+
+==== Especificos da aplicação Fortunes ====
+
+- Fontes dos fortunes (Provider): implementação de interface FortuneProvider (FortuneProviderDatabase, FortuneProviderService e FortuneProviderStatic)
+	- Principais arquivos envolvidos e comentários
+		- ..src/br/org/group/android/app/FortuneProvider.java
+			Define a interface FortuneProvider, com o métodos:
+			- FortuneVO updateFortune():  
+			- FortuneVO getFortune(id): 
+		- ..src/br/org/group/android/net/FortuneProviderService.java
+			Define a classe FortuneProvideService, que acessa um webservice para receber uma nova fortune 
+				- método updateFortune(): lê uma frase do webservice, insere no banco de dados e retorna essa(?) fortune
+				- método getFortune(id): lê uma frase do webservice, insere no banco e a retorna a frase com o id passado como parâmetro
+		- ..src/br/org/group/android/dao/FortuneProviderDatabase.java
+		    Define a classe FortuneProviderDatabase, que acessa um banco de dado para ler as fortunes
+		        - método updateFortune(): lê uma frase aleatória do banco de dados e retorna
+		        - método getFortune(id): retorna uma frase com o id passado como parâmetro
+		- ..src/br/org/group/android/utils/FortuneProviderStatic.java
+		    Define a classe FortuneProvideStatic, que contém frases ad-hoc. Usada principalmente para teste
+		    
+		- ..src/br/org/group/android/gui/FortunesWidget.java
+			No método onUpdate é definido a origem das fortunes. Graças ao polimorfismo, basta instanciar uma das classes que implementa FortuneProvider. Além, atualmente só esteja sendo utilizado o banco de dados. Segundo os desenvolvedores, o webservice foi desativado devido a questõs de performance da aplicação.
+
+	
+=== Variações de dispositivos ===
+
+ - Tamanho das telas: Nelson está fazendo...
