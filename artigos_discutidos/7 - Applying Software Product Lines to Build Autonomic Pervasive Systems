@@ -1,0 +1,24 @@
+Contribuições
+
+- Apresentação de uma abordagem para o projeto de LPSs pervasivas, baseado em
+Model Drive Development (MDD) e princípios da modelagem de variabilidades:
+    - Essa abordagem aplica o conhecimento de LPSs para produtos de um LPSs
+    - O conhecimento é estendido com ligações(bindings) alternativos
+    - Com esse conhecimento, o sistema resultante pode realizar ligações dinâmicas
+    para reconfigurar-se sem estar conectado à LPS 
+- Cita alguns desafios relacionados a construção de sistemas pervasivos mas que 
+não são suficientemente abordados por outras técnicas
+- Categorização dos sistemas pervasivos do ponto de vista da evolução de como esses
+sistemas respondem a mudanças no ambiente
+
+
+Pontos Positivos
+- Definição de vários conceitos na Introdução, como computação pervasiva, sistemas
+autônomos...
+- Descrição, ainda que sem muitos detalhes, de cada fase da abordagem (Seção 3)
+
+Pontos Negativos
+- Quando ele diz que vai fazer a categorização na seção 2, eu esperava outra coisa.
+- 
+
+Outros
