@@ -28,3 +28,46 @@ Fortunes
 + A fortune deve ser exibida em no máximo 3 linhas (20)
 + Compatível com várias versões do Android (21)
     + Android 1.6 é o requisito mínimo
+
+
+=== Mecanismos de controle das variabilidades ===
+
+==== Especificos da aplicação Fortunes ====
+
+- Fontes dos fortunes (Provider): implementação de interface FortuneProvider (FortuneProviderDatabase, FortuneProviderService e FortuneProviderStatic)
+	- Principais arquivos envolvidos e comentários
+		- ..src/br/org/group/android/app/FortuneProvider.java
+			Define a interface FortuneProvider, com o métodos:
+			- FortuneVO updateFortune():  
+			- FortuneVO getFortune(id): 
+		- ..src/br/org/group/android/net/FortuneProviderService.java
+			Define a classe FortuneProvideService, que acessa um webservice para receber uma nova fortune 
+				- método updateFortune(): lê uma frase do webservice, insere no banco de dados e retorna essa(?) fortune
+				- método getFortune(id): lê uma frase do webservice, insere no banco e a retorna a frase com o id passado como parâmetro
+		- ..src/br/org/group/android/dao/FortuneProviderDatabase.java
+		    Define a classe FortuneProviderDatabase, que acessa um banco de dado para ler as fortunes
+		        - método updateFortune(): lê uma frase aleatória do banco de dados e retorna
+		        - método getFortune(id): retorna uma frase com o id passado como parâmetro
+		- ..src/br/org/group/android/utils/FortuneProviderStatic.java
+		    Define a classe FortuneProvideStatic, que contém frases ad-hoc. Usada principalmente para teste
+		    
+		- ..src/br/org/group/android/gui/FortunesWidget.java
+			No método onUpdate é definido a origem das fortunes. Graças ao polimorfismo, basta instanciar uma das classes que implementa FortuneProvider. Além, atualmente só esteja sendo utilizado o banco de dados. Segundo os desenvolvedores, o webservice foi desativado devido a questõs de performance da aplicação.
+
+- Orientação da tela
+    O desenvolvedor poderá ou não permitir que a sua aplicação seja rotacionada, caso o aparelho também for.
+    Neste caso, ele poderá definir dois arquivos (XML) de layout, um para paisagem e outra para retrato.
+    De acordo com a posição do aparelho, o Android carregará um ou outro, através do método setContentView() da Activity.
+    No entanto, a própria aplicação é responsável por salvar os dados que estão sendo exibidos e carrega-los na nova posição.
+    No caso do Fortunes, isso pode ser notado na classe FortunesActivity. No método onCreate, que é o primeiro método executado quando uma activity é iniciada - e sempre que o aparelho é iniciado, a activity é iniciada - é verificada se existe ou não uma fortune salva anteriormente. No método onSaveInstanceState é onde a fortune ou o estado da activity, falando genericamente, deverá ser salva.
+    - Principais arquivos envolvidos
+        - ..src/br/org/group/android/gui/FortunesActivity.java
+        Define a activity FortunesActivity, que é a tela da aplicação onde a fortune é exibida
+        - ..res/layout/fortunes_activity.xml
+        Define o layout de FortunesActivity. Como ele foi definido de forma relativa, não é necessário um layout para cada orientação.
+            
+    
+	
+=== Variações de dispositivos ===
+
+ - Tamanho das telas: 
