@@ -1,0 +1,10 @@
+## generic files to ignore
+*~
+*.aux
+*.log
+*.nav
+*.out
+*.pdf
+*.snm
+*.toc
+*.DS_Store
