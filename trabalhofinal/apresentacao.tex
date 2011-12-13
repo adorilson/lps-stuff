@@ -120,6 +120,32 @@
             \item Categorias: as frases podem ser agrupadas por categorias
         \end{itemize}
     }
+    \subsection{Mecanismos de controle das variabilidades}
+    \frame
+    {
+        \frametitle{Ponto de variação: Fonte das fortunes}
+        \begin{itemize}
+            \item Mecanismo: Polimorfismo 
+            \item Cada variação é uma implementação da interface FortuneProvider
+            \item Implementações atuais: FortuneProviderDatabase, FortuneProviderService 
+            e FortuneProviderStatic
+            \item A mudança deve ser feito em tempo de compilação
+		\end{itemize}
+    }
+    \frame
+    {
+        \frametitle{Ponto de variação: Orientação da tela}
+        \begin{itemize}
+            \item Mecanismo: arquivos de layout definidos em XML's + 
+            armazenamento de estado atual 
+            \item A aplicação poderá ter dois layout: um para retrato e outro para 
+            paisagem
+            \item O Android desenha as telas com base nesse arquivo, selecionando 
+            o arquivo apropriado automaticamente, no entanto, deverá ser de responsabilidade
+            da aplicação atualização das informações exibidas. 
+		\end{itemize}
+    }
+
     
 \section{(Pre)Avaliação do Trabalho Proposto}
     \subsection{(Pre)Avaliação do Trabalho Proposto}
