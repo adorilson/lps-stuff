@@ -1,35 +1,30 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-	<featureModel chosenLayoutAlgorithm="1">
+	<featureModel chosenLayoutAlgorithm="0">
 		<struct>
-			<and abstract="true" mandatory="true" name="Fortunes">
-				<alt abstract="true" mandatory="true" name="Versão">
-					<and mandatory="true" name="Online">
-						<feature name="Doação"/>
-					</and>
-					<and mandatory="true" name="Offline">
-						<feature name="Propaganda"/>
-					</and>
+			<and abstract="true" coordinates="447, 40" mandatory="true" name="Fortunes">
+				<and abstract="true" coordinates="223, 90" name="Compartilhamento">
+					<feature coordinates="177, 140" mandatory="true" name="Email"/>
+					<feature coordinates="225, 140" mandatory="true" name="SMS"/>
+					<feature coordinates="267, 140" mandatory="true" name="Twitter"/>
+					<feature coordinates="324, 136" mandatory="true" name="Facebook"/>
+				</and>
+				<feature coordinates="386, 102" name="Doação"/>
+				<alt abstract="true" coordinates="472, 90" name="Fonte">
+					<feature coordinates="383, 174" mandatory="true" name="BancoDados"/>
+					<feature coordinates="469, 175" mandatory="true" name="Internet"/>
+					<feature coordinates="529, 174" mandatory="true" name="Estatico"/>
 				</alt>
-				<or abstract="true" name="Compartilhamento">
-					<feature mandatory="true" name="Email"/>
-					<feature mandatory="true" name="SMS"/>
-					<feature mandatory="true" name="Twitter"/>
-					<feature mandatory="true" name="Facebook"/>
+				<feature coordinates="534, 102" name="Propaganda"/>
+				<or abstract="true" coordinates="647, 90" name="Tela">
+					<feature coordinates="601, 140" mandatory="true" name="Paisagem"/>
+					<feature coordinates="674, 140" mandatory="true" name="Retrato"/>
 				</or>
-				<alt abstract="true" name="Fonte">
-					<feature mandatory="true" name="Internet"/>
-					<feature mandatory="true" name="BancoDados"/>
-				</alt>
-				<or abstract="true" name="Tela">
-					<feature mandatory="true" name="Paisagem"/>
-					<feature mandatory="true" name="Retrato"/>
-				</or>
-				<feature name="Fundo"/>
-				<or abstract="true" name="Categorias">
-					<feature mandatory="true" name="Religiao"/>
-					<feature mandatory="true" name="Politica"/>
-					<feature mandatory="true" name="Futebol"/>
-					<feature mandatory="true" name="Etc"/>
+				<feature coordinates="716, 90" name="Fundo"/>
+				<or abstract="true" coordinates="797, 90" name="Categorias">
+					<feature coordinates="732, 140" mandatory="true" name="Religiao"/>
+					<feature coordinates="793, 140" mandatory="true" name="Politica"/>
+					<feature coordinates="850, 140" mandatory="true" name="Futebol"/>
+					<feature coordinates="907, 140" mandatory="true" name="Etc"/>
 				</or>
 			</and>
 		</struct>
