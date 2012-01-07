@@ -1,9 +1,9 @@
-all: clean apostila.tex
-	pdflatex apostila
-	bibtex apostila
-	pdflatex apostila
-	pdflatex apostila
-	evince apostila.pdf&
+all: clean monografia.tex
+	pdflatex monografia
+	bibtex monografia
+	pdflatex monografia
+	pdflatex monografia
+	evince monografia.pdf&
 
 apre: clean apresentacao.tex
 	pdflatex apresentacao.tex

@@ -1,0 +1,235 @@
+% ------------------------------------------------------------------------------
+% Visão geral de LPS's para Android
+% Autores:
+%     Adorilson Bezerra <adorilson@gmail.com>
+% Licença Creative Commons Atribuição 3.0. 
+% Você pode usar e alterar este documento, 
+% mas deve obrigatoriamente citar a autoria. 
+% ------------------------------------------------------------------------------
+
+\documentclass[a4paper,12pt]{report}
+
+% ------------------------------------------------------------------------------
+\usepackage[top=3cm,left=3cm,right=2cm,bottom=2cm]{geometry}
+\usepackage[latin1]{inputenc}
+\usepackage[brazil]{babel}
+\usepackage[pdftex]{graphicx}
+\usepackage[normalem]{ulem}   % Sublinhar textos
+\usepackage{pslatex}          % Usa fontes standard ao invés das fontes do
+                              % LaTeX, melhorando a qualidade dos pdfs gerados
+% ------------------------------------------------------------------------------
+
+\title
+{
+    \vspace{1.5cm}
+    \begin{table}[h]
+    \centering
+    \setlength{\arrayrulewidth}{3.5\arrayrulewidth}
+        \begin{tabular}{c}
+        \hline\\
+        \vspace{0.3cm}\Huge Visão geral de LPS's para Android\\
+        \hline
+        \end{tabular}
+    \end{table}
+}
+\author
+{
+    Adorilson Bezerra\\
+    \{adorilson@gmail.com\}
+}
+\date{\vspace{1.5cm}\today}
+
+% ------------------------------------------------------------------------------
+\begin{document}
+
+\maketitle
+
+\pagenumbering{roman}
+\tableofcontents
+\listoffigures
+\listoftables
+
+\pagebreak
+\pagenumbering{arabic}
+
+\pagestyle{headings}
+
+% ==============================================================================
+\chapter{Introdução}
+
+
+
+\section{Motivação}
+Determinar os possiveis pontos de variacao da plataforma Android, assim como 
+entender os mecanismos que a plataforma oferece para auxiliar o gerenciamento das 
+variabilidades.
+
+
+% ------------------------------------------------------------------------------
+\section{Problema}
+Manter uma aplicação que seja executada em dispositivos com caracteristicas distintas \\
+Gerenciar variabilidades determinadas pelas regras de negocios das aplicações
+
+\section{Limitacao dos trabalhos propostos}
+Quase inexistencia de trabalhos relacionados \\
+Os existentes focam outras aspectos que nao as variabilidades \\
+Ha trabalhos relacionados a outras plataformas
+
+\section{Abordagem}
+Estudo da plataforma Android \\
+ Documentacao e blogs oficiais, comunidades diversas \\
+Estudo de uma aplicacao \\
+ Froid - Fortunes for Android
+
+% ==============================================================================
+\chapter{Detalhamento de trabalho}
+
+ Estudo das variabilidades da plataforma
+ Mecanismos de controle
+ Exemplos do Estudo de caso, quando possível
+
+% ------------------------------------------------------------------------------
+\section{Plataforma Android}
+O Android é uma pilha de software para dispositivos móveis que inclui um sistema
+operacional, middleware e aplicativos importantes.
+
+\subsection{Arquitetura da plataforma}
+
+\begin{figure}
+    \includegraphics[width=10cm]{img/system-architecture.jpg}
+    \caption{Arquitetura da plataforma Android}
+    \label{system-architecture}
+\end{figure}
+
+Os principais componentes do Application Framework são:
+\begin{itemize}
+\sloppy % evita que em linhas muito longas o espaço entre as palavras seja
+        % aumentado
+    \item System View: uma 'view' representa um widget que aparece na tela
+    \item Content Providers: permite que aplicações possam acessar dados de outras 
+    aplicações, ou compartilhar seus dados com outras
+    \item Resource Manager: fornece acesso para recursos que não são código, como 
+    strings de localização, gráficos e arquivos de layout
+    \item Notification Manager: permite que as aplicações exibam alertas customizados 
+    na barra de status
+    \item Activity Manager: gerencia o ciclo de vida das aplicações e fornece um 
+    mecanismo comum de navegação
+\fussy % dual do \sloppy
+\end{itemize}
+
+\subsection{Arquitetura de aplicações Android}
+
+\includegraphics[width=10cm]{img/Activity_lifecycle}
+
+\begin{itemize}
+    \item Não existe método main()
+    \item Uma aplicação pode ter quatro tipos de componentes:
+    \item Activity: interfaces com o usuário (tela)
+    \item Service: executa em background, sem interface com o usuário
+    \item Broadcast receivers: apenas recebe e reage a mensagens de broadcast
+    \item Content providers: compartilhar dados da aplicações com outras aplicações
+\end{itemize}
+
+% ------------------------------------------------------------------------------
+\section{Estudo de caso: Froid - Fortunes for Android}
+
+\includegraphics[width=10cm]{img/fortunes_fm}
+
+% ..............................................................................
+\section{Pontos de variações em dispositivos com Android}
+
+\begin{itemize}
+    \item Versão da API
+    \item Dispositivos com ou sem sensores
+    \item Gráficos 2D ou 3D
+    \item Mecanismo de interação
+    \item Pacote de compatibilidade
+    \item Versão da OpenGL ES
+    \item Android NDK           
+    \item Tamanhos e densidade das telas
+    \item Línguas internacionais
+\end{itemize}
+
+% ..............................................................................
+\subsection{Mecanismos de controle de variabilidades}
+\begin{itemize}
+    \item  Polimorfismo
+    \item Reflexão
+    \item Classe wrapper
+    \item Checagens de versão da API e de recursos do aparelho em tempo de execução
+    \item Atributos final e Compilação Condicional 
+    \item Recursos da Aplicação
+\end{itemize}
+
+% ..............................................................................
+\subsection{Polimofirmo}
+No Froid, o controle das variabilidades para a Fonte das fortunes é feita através 
+da implementação da interface FortuneProvider.
+
+\includegraphics[width=10cm]{img/implementacao_FortuneProvider}
+\includegraphics[width=10cm]{img/instaciando_provider}
+\includegraphics[width=10cm]{img/FortuneProviderUtils}
+% ------------------------------------------------------------------------------
+\subsection{Reflexão}
+
+Texto + imagens do slide 22
+
+% ..............................................................................
+\subsection{Classe wrapper}
+
+Texto + imagens dos slides 23-25
+
+% ..............................................................................
+\subsection{Checagem da versão em tempo de execução}
+
+Texto + imagens dos slides 26
+
+% ..............................................................................
+\subsection{Checagem da existência de um determinado recurso}
+Pode-se utilizar o método PackageManager.hasSystemFeature() para determinar se o 
+dispositivo possi um determinado recurso
+
+% ..............................................................................
+\subsection{Atributos com modificadores final}
+
+Texto + imagens dos slides 28
+
+
+% ..............................................................................
+\subsection{Compilação condicional}
+
+Texto + imagens do slide 29
+
+
+% ..............................................................................
+\subsection{Recursos da aplicação}
+
+Texto + imagens dos slides 30-34
+
+
+% ..............................................................................
+\subsection{Compartilhamento de informações}
+
+Texto + imagens dos slides 25
+
+
+% ==============================================================================
+\chapter{Conclusão}
+
+% ..............................................................................
+\section{Pré-avaliação}
+Em se tratando de gerência da variabilidades, há todo um campo de estudo pela 
+frente \\
+Com os mecanismos atuais, as aplicações ficarão inchadas
+
+% ------------------------------------------------------------------------------
+\section{Trabalhos futuros}
+ Implementar ou estudar uma LPS de fato para o Android
+
+% ==============================================================================
+\nocite*
+\bibliographystyle{apalike}
+\bibliography{biblio}
+
+% ==============================================================================
+\end{document}
