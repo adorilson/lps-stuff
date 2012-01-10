@@ -1,9 +1,9 @@
 % ------------------------------------------------------------------------------
-% Visão geral de LPS's para Android
+% VisÃ£o geral de LPS's para Android
 % Autores:
 %     Adorilson Bezerra <adorilson@gmail.com>
-% Licença Creative Commons Atribuição 3.0. 
-% Você pode usar e alterar este documento, 
+% LicenÃ§a Creative Commons AtribuiÃ§Ã£o 3.0. 
+% VocÃª pode usar e alterar este documento, 
 % mas deve obrigatoriamente citar a autoria. 
 % ------------------------------------------------------------------------------
 
@@ -11,11 +11,11 @@
 
 % ------------------------------------------------------------------------------
 \usepackage[top=3cm,left=3cm,right=2cm,bottom=2cm]{geometry}
-\usepackage[latin1]{inputenc}
+\usepackage[utf8]{inputenc}
 \usepackage[brazil]{babel}
 \usepackage[pdftex]{graphicx}
 \usepackage[normalem]{ulem}   % Sublinhar textos
-\usepackage{pslatex}          % Usa fontes standard ao invés das fontes do
+\usepackage{pslatex}          % Usa fontes standard ao invÃ©s das fontes do
                               % LaTeX, melhorando a qualidade dos pdfs gerados
 % ------------------------------------------------------------------------------
 
@@ -27,7 +27,7 @@
     \setlength{\arrayrulewidth}{3.5\arrayrulewidth}
         \begin{tabular}{c}
         \hline\\
-        \vspace{0.3cm}\Huge Visão geral de LPS's para Android\\
+        \vspace{0.3cm}\Huge VisÃ£o geral de LPS's para Android\\
         \hline
         \end{tabular}
     \end{table}
@@ -54,129 +54,56 @@
 
 \pagestyle{headings}
 
-% ==============================================================================
-\chapter{Introdução}
-
-\section{Motivação}
-O mercado de dispositivos móveis tem crescido muito rapidamente nos últimos anos.
-Previsões apontam que [NÚMERO DE DISPOSITIVOS NOS PRÓXIMOS ANOS....]. Desenvolvedores
-de aplicações desejam disponibilizar seus aplicativos para o máximo número de 
-dispositivos. Dispositivos estes que possuem diversas diferenças entre si, 
-principalmente considerando smartphones e tablets: tamanho e qualidade de tela, 
-existência ou não de recursos como telefone GSM, bluetooth, EDGE, 3G, WiFi, câmera, 
-GPS, bússola, e acelerômetro entre outros.
-
-Um dos fatores que influenciam na escolha de um aparelho é o sistema operacional.
-O Android é um dos sistemas operacionais mais utilizados no mundo, estando 
-disponível em mais de [NÚMERO DE APARELHOS COM ANDROID] tipos de aparelhos. 
-O que reforça a necessidade de mecanismos para gerenciar as diversas variações entre 
-os aparelhos.
-
-Além disso, irão existir também variações de regras de negócios e recursos da aplicação.
-Desenvolvedores irão desejar facilidades para gerenciar diferentes produtos mas que 
-compartilham um núcleo comum.
-
-Linha de produtos de software é uma família de software que compartilham um núcleo 
-comum. Os mecanismos providos pelas plataformas de desenvolvimento para para o gerência 
-de variabilidades entres diferentes produtos é um importante aspectos a ser considerado
-e compreendido pelos desenvolvedores.
-
-% ------------------------------------------------------------------------------
-%\section{Motivação}
-Dessa forma, é necessário determinarmos os possíveis pontos 
-de variação da plataforma Android, assim como entender os mecanismos que a plataforma 
-oferece para auxiliar o gerenciamento das variabilidades.
-
-Com isso, seremos capazes de criar aplicações que possam ser executadas em dispositivos
-com características distintas, além de gerenciar variabilidades determinadas pelas 
-regras de negócios.
-
-% ------------------------------------------------------------------------------
-%\section{Problema}
-%Manter uma aplicação que seja executada em dispositivos com caracteristicas distintas \\
-%Gerenciar variabilidades determinadas pelas regras de negocios das aplicações
-
-\section{Limitação dos trabalhos propostos}
-Executando consultas nos mecanismos de buscas na Internet, assim como em diretórios 
-de trabalhos acadêmicos e eventos, praticamente não encontra-se trabalhos relacionados
-a linha de produtos de software e Android. Os poucos trabalhos retornados apenas citam
-o Android, mas o foco são outras plataformas. Aqueles que tratam do Android, discutem 
-aspectos que não o controle de variabilidades.
-
-Um único trabalho que supostamente trata do uso de linha de produtos de software
-para o desenvolvimento de uma família de aplicações para Android está em \cite{gnios}.
-No entanto, não foi possível acesso ao código fonte da LPS, tampouco àlguma publicação
-relacionada. 
-
-Em contato por e-mail, nos foi informado que este projeto foi parte de uma
-projeto de mestrado e que, infelizmente, o código fonte havia sido perdido. Foi 
-acrescentado que o Android SDK não gerencia variabilidades, sendo a aplicação distribuída 
-na forma de uma arquivo APK, que pode ser instalado em qualquer dispositivo. E, 
-considerando que o hardware da plataforma é fragmentado, o conceito de variabilidades
-de produtos é útil aqui. Por fim, foi acrescentado que o família de produtos Travel
-Excel foi projetada com a FeatureHouse IDE, disponível em \cite{featurehouse}.
-
-\section{Contribuição do trabalho}
-O presente trabalho enumera os mecanismos de controle de variabilidades que podem
-ser utilizados em aplicações desenvolvidos para a plataforma Android. Para tanto, 
-a metodologia utilizada foi o estudo da plataforma, através da documentação e 
-blogs oficiais, comunidades diversas de desenvolvedores e o estudo de trabalhos 
-relacionados, ainda que escassos em se tratando da tecnologia Android, leitura de 
-código-fonte de projetos de código aberto e um estudo de caso.
-
-\section{Estrutura do trabalho}
-A proxima seção faz isso e aquilo, a proxima aquilo outro... O trabalho é concluído 
-na ultima seção.
-
+\include{introducao}
 
 % ==============================================================================
 \chapter{Detalhamento de trabalho}
 
-Nesse capítulo, apresentaremos a arquitetura da plataforma Android, assim como o
-ciclo de vida de uma aplicação para essa plataforma. Por fim, discutiremos os 
+Nesse capÃ­tulo, apresentaremos a arquitetura da plataforma Android, assim como o
+ciclo de vida de uma aplicaÃ§Ã£o para essa plataforma. Por fim, discutiremos os 
 mecanismos de controle das variabilidades.
 
  Estudo das variabilidades da plataforma
  Mecanismos de controle
- Exemplos do Estudo de caso, quando possível
+ Exemplos do Estudo de caso, quando possÃ­vel
 
 % ------------------------------------------------------------------------------
 \section{Plataforma Android}
-Segundo \cite{whatisandroid}, o Android é uma pilha de software para dispositivos
-móveis que inclui um sistema operacional, middleware e aplicações chaves. O Android
-SDK fornece as ferramentas e API's necessários para o desenvolvimento de aplicações
-para a plataforma, utilizando a linguagem de programação Java.
+Segundo \cite{whatisandroid}, o Android Ã© uma pilha de software para dispositivos
+mÃ³veis que inclui um sistema operacional, middleware e aplicaÃ§Ãµes chaves. O Android
+SDK fornece as ferramentas e API's necessÃ¡rios para o desenvolvimento de aplicaÃ§Ãµes
+para a plataforma, utilizando a linguagem de programaÃ§Ã£o Java.
 
-\subsection{Características}
+\subsection{CaracterÃ­sticas}
 \begin{itemize}
-    \item Framework de aplicações: permite o reuso e troca de componentes.
-    Os desenvolvedores têm acesso completo à mesma API que é usada pelas aplicações
-    do núcleo da plataforma.
-    \item Máquina virtual Dalvik: é uma máquina virtual especializada para o uso em
-    dispositivos móveis. Aplicações escritas em Java são compiladas em bytecodes para
-    essa máquina virtual, e não uma máquina virtual Java.
+    \item Framework de aplicaÃ§Ãµes: permite o reuso e troca de componentes.
+    Os desenvolvedores tÃªm acesso completo Ã  mesma API que Ã© usada pelas aplicaÃ§Ãµes
+    do nÃºcleo da plataforma.
+    \item MÃ¡quina virtual Dalvik: Ã© uma mÃ¡quina virtual especializada para o uso em
+    dispositivos mÃ³veis. AplicaÃ§Ãµes escritas em Java sÃ£o compiladas em bytecodes para
+    essa mÃ¡quina virtual, e nÃ£o uma mÃ¡quina virtual Java.
     \item Navegador integrado: navegador baseado no motor {\it open source} WebKit
-    \item Otimizações gráficas: possibilitadas por uma biblioteca gráfica 2D 
-    personalizada; gráficos 3D baseadas na especificação OpenGL ES 1.0 (acelaração
+    \item OtimizaÃ§Ãµes grÃ¡ficas: possibilitadas por uma biblioteca grÃ¡fica 2D 
+    personalizada; grÃ¡ficos 3D baseadas na especificaÃ§Ã£o OpenGL ES 1.0 (acelaraÃ§Ã£o
     por hardware opcional)
     \item SQLite: para armazenamento de dados estruturados
-    \item Suporte para multimídia: suporte para os formatos mais comuns de 
-    áudio, vídeo e imagem (MPEG4, H.264, MP3, AAC, AMR, JPG, PNG, GIF)
+    \item Suporte para multimÃ­dia: suporte para os formatos mais comuns de 
+    Ã¡udio, vÃ­deo e imagem (MPEG4, H.264, MP3, AAC, AMR, JPG, PNG, GIF)
     \item Rico ambiente de desenvolvimento: incluindo um emulador de dispositivo,
-    ferramentas para depuração, {\it profiling} de memória e perfomance, e um {\it plugin}
+    ferramentas para depuraÃ§Ã£o, {\it profiling} de memÃ³ria e perfomance, e um {\it plugin}
     para o Eclipe IDE
     \item Alguns recursos dependentes do dispositivo
         \begin{itemize}
             \item Telefonia GSM 
             \item Bluetooth, EDGE, 3G, e WiFi
-            \item Camera, GPS, bússola, e acelerômetro
+            \item Camera, GPS, bÃºssola, e acelerÃ´metro
         \end{itemize}
 \end{itemize}
 
 \subsection{Arquitetura da plataforma}
 
 A figura \ref{system-architecture} mostra os principais componentes do sistema 
-operacional Android. Cada seção é descrita abaixo.
+operacional Android. Cada seÃ§Ã£o Ã© descrita abaixo.
 
 \begin{figure}
     \includegraphics[width=10cm]{img/system-architecture.jpg}
@@ -185,94 +112,94 @@ operacional Android. Cada seção é descrita abaixo.
 \end{figure}
 
 \subsubsection{Application}
-Android será distribuido com um conjuto de aplicações centrais, incluindo um cliente
-de e-mail, programa de SMS, calendário, mapas, navegador, entre outros. Todas as 
-aplicações são escritas em Java.
+Android serÃ¡ distribuido com um conjuto de aplicaÃ§Ãµes centrais, incluindo um cliente
+de e-mail, programa de SMS, calendÃ¡rio, mapas, navegador, entre outros. Todas as 
+aplicaÃ§Ãµes sÃ£o escritas em Java.
 
 \subsubsection{Application Framework}
 Fornecendo uma plataforma de desenvolvimento aberta, Android permite aos desenvolvedores
-criarem aplicações extremamente ricas e inovadores. Desenvolvedores são livres para
-tirar vantagem do hardware dos dispositivos, acessar informações de localização, 
-executar serviços em backgrounds, definir alarmes e notificações para a barra de 
+criarem aplicaÃ§Ãµes extremamente ricas e inovadores. Desenvolvedores sÃ£o livres para
+tirar vantagem do hardware dos dispositivos, acessar informaÃ§Ãµes de localizaÃ§Ã£o, 
+executar serviÃ§os em backgrounds, definir alarmes e notificaÃ§Ãµes para a barra de 
 status etc.
 
-Desenvolvedores tem total acesso às mesmas API's do framework usadas pelas aplicações 
-do núcleo. A arquitetura da aplicação é projetada para simplificar o reuso de componentes;
-qualquer aplicação pode publicar suas capacidades(?) e qualquer outra aplicação pode 
-fazer uso dessas capacidades (sujeito às restrições de segurança impostas pelo 
-framwork). Esse mesmo mecanismo permite que componentes sejam substituídos pelo 
-usuário.
+Desenvolvedores tem total acesso Ã s mesmas API's do framework usadas pelas aplicaÃ§Ãµes 
+do nÃºcleo. A arquitetura da aplicaÃ§Ã£o Ã© projetada para simplificar o reuso de componentes;
+qualquer aplicaÃ§Ã£o pode publicar suas capacidades(?) e qualquer outra aplicaÃ§Ã£o pode 
+fazer uso dessas capacidades (sujeito Ã s restriÃ§Ãµes de seguranÃ§a impostas pelo 
+framwork). Esse mesmo mecanismo permite que componentes sejam substituÃ­dos pelo 
+usuÃ¡rio.
 
-Os principais componentes do Application Framework são:
+Os principais componentes do Application Framework sÃ£o:
 \begin{itemize}
-\sloppy % evita que em linhas muito longas o espaço entre as palavras seja
+\sloppy % evita que em linhas muito longas o espaÃ§o entre as palavras seja
         % aumentado
     \item System View: uma 'view' representa um widget que aparece na tela
-    \item Content Providers: permite que aplicações possam acessar dados de outras 
-    aplicações, ou compartilhar seus dados com outras
-    \item Resource Manager: fornece acesso para recursos que não são código, como 
-    strings de localização, gráficos e arquivos de layout
-    \item Notification Manager: permite que as aplicações exibam alertas customizados 
+    \item Content Providers: permite que aplicaÃ§Ãµes possam acessar dados de outras 
+    aplicaÃ§Ãµes, ou compartilhar seus dados com outras
+    \item Resource Manager: fornece acesso para recursos que nÃ£o sÃ£o cÃ³digo, como 
+    strings de localizaÃ§Ã£o, grÃ¡ficos e arquivos de layout
+    \item Notification Manager: permite que as aplicaÃ§Ãµes exibam alertas customizados 
     na barra de status
-    \item Activity Manager: gerencia o ciclo de vida das aplicações e fornece um 
-    mecanismo comum de navegação
+    \item Activity Manager: gerencia o ciclo de vida das aplicaÃ§Ãµes e fornece um 
+    mecanismo comum de navegaÃ§Ã£o
 \fussy % dual do \sloppy
 \end{itemize}
 
 \subsubsection{Libraries}
-Android inclui um conjunto de bibliotecas C/C++ usada por vários componentes do 
-sistema. Esses recursos são expostos para os desenvolvedores através do "application 
-framework". Algumas das principais bibliotecas são listadas a seguir:
+Android inclui um conjunto de bibliotecas C/C++ usada por vÃ¡rios componentes do 
+sistema. Esses recursos sÃ£o expostos para os desenvolvedores atravÃ©s do "application 
+framework". Algumas das principais bibliotecas sÃ£o listadas a seguir:
 
 \begin{itemize}
-    \item System C library - implementação da bibliotec padrão C (libc), otimizado
+    \item System C library - implementaÃ§Ã£o da bibliotec padrÃ£o C (libc), otimizado
     para dispositivos embarcados baseados em Linux
     \item Media Libraries - as bibliotecas suportam a maioria dos formatos mais 
     populares de audio, video e imagem, incluindo MPEG4, H.264, MP3, AAC, AMR, 
     JPG, e PNG
-    \item Surface Manager - gerencia o acesso o subsistema do display e composição 
-    suave de camadas 2D e 3D para múltiplos dispositivos
+    \item Surface Manager - gerencia o acesso o subsistema do display e composiÃ§Ã£o 
+    suave de camadas 2D e 3D para mÃºltiplos dispositivos
     \item LibWebCore - um moderno mecanismo para navegador web que possibilita tanto o 
     navegador do Android quanto um visualizador web embutido
-    \item SGL - o mecanismo para gráficos 2D subjacente
-    \item 3D libraries - uma implementação baseada na API OpenGL ES 1.0; as bibliotecas
-    podem tanto usar a aceleração 3D por hardware (quando disponível), quanto
-    a renderação 3D otimizada por software, já incluida.
-    \item FreeType - renderização de fonte vetorial e bitmap
+    \item SGL - o mecanismo para grÃ¡ficos 2D subjacente
+    \item 3D libraries - uma implementaÃ§Ã£o baseada na API OpenGL ES 1.0; as bibliotecas
+    podem tanto usar a aceleraÃ§Ã£o 3D por hardware (quando disponÃ­vel), quanto
+    a renderaÃ§Ã£o 3D otimizada por software, jÃ¡ incluida.
+    \item FreeType - renderizaÃ§Ã£o de fonte vetorial e bitmap
     \item SQLite - um poderoso e leve mecanismos de banco de dados relacional, 
-    disponível para todas as apliações
+    disponÃ­vel para todas as apliaÃ§Ãµes
 \end{itemize}
 
 \subsubsection{Android Runtime}
 
-Android inclui um conjunto de biblitocas básicas que provê a maioria das funcionalidades
-disponíveis na biblioteca padrão da linguagem de programação Java.
+Android inclui um conjunto de biblitocas bÃ¡sicas que provÃª a maioria das funcionalidades
+disponÃ­veis na biblioteca padrÃ£o da linguagem de programaÃ§Ã£o Java.
 
-Cada aplicação Android executa em seu próprio processo, com sua própria instância 
-da máquina virtual Dalvik. Dalvik foi escrita de forma a permitir que um dispositivo
+Cada aplicaÃ§Ã£o Android executa em seu prÃ³prio processo, com sua prÃ³pria instÃ¢ncia 
+da mÃ¡quina virtual Dalvik. Dalvik foi escrita de forma a permitir que um dispositivo
 execute multiplas MV's eficientemente. A MV Dalvik executa arquivos no formato de 
-Executáveis Dalvik (.dex) que é otimizado para usar o mínimo de memória possível. 
-A MV é baseado em registradores, e executa classes compiladas por um compilador Java 
+ExecutÃ¡veis Dalvik (.dex) que Ã© otimizado para usar o mÃ­nimo de memÃ³ria possÃ­vel. 
+A MV Ã© baseado em registradores, e executa classes compiladas por um compilador Java 
 que transforma essas classes no formato .dex com a ferramenta "dx".
 
 \subsubsection{Linux Kernel}
 
-Android depende da versão 2.6 do Linux para serviços do núcleo do sistema como 
-segurança, gerência de memória, gerência de processos, pilha de rede e modelo de 
-drivers. O núcleo também atua como uma camada abstrata entre o hardware e o resto
+Android depende da versÃ£o 2.6 do Linux para serviÃ§os do nÃºcleo do sistema como 
+seguranÃ§a, gerÃªncia de memÃ³ria, gerÃªncia de processos, pilha de rede e modelo de 
+drivers. O nÃºcleo tambÃ©m atua como uma camada abstrata entre o hardware e o resto
 da pilha de sofware.
 
-\subsection{Arquitetura de aplicações Android}
+\subsection{Arquitetura de aplicaÃ§Ãµes Android}
 
 \includegraphics[width=10cm]{img/Activity_lifecycle}
 
 \begin{itemize}
-    \item Não existe método main()
-    \item Uma aplicação pode ter quatro tipos de componentes:
-    \item Activity: interfaces com o usuário (tela)
-    \item Service: executa em background, sem interface com o usuário
+    \item NÃ£o existe mÃ©todo main()
+    \item Uma aplicaÃ§Ã£o pode ter quatro tipos de componentes:
+    \item Activity: interfaces com o usuÃ¡rio (tela)
+    \item Service: executa em background, sem interface com o usuÃ¡rio
     \item Broadcast receivers: apenas recebe e reage a mensagens de broadcast
-    \item Content providers: compartilhar dados da aplicações com outras aplicações
+    \item Content providers: compartilhar dados da aplicaÃ§Ãµes com outras aplicaÃ§Ãµes
 \end{itemize}
 
 % ------------------------------------------------------------------------------
@@ -281,41 +208,41 @@ da pilha de sofware.
 \includegraphics[width=10cm]{img/fortunes_fm}
 
 % ..............................................................................
-\section{Pontos de variações em dispositivos com Android}
+\section{Pontos de variaÃ§Ãµes em dispositivos com Android}
 
 \begin{itemize}
-    \item Versão da API
+    \item VersÃ£o da API
     \item Dispositivos com ou sem sensores
-    \item Gráficos 2D ou 3D
-    \item Mecanismo de interação
+    \item GrÃ¡ficos 2D ou 3D
+    \item Mecanismo de interaÃ§Ã£o
     \item Pacote de compatibilidade
-    \item Versão da OpenGL ES
+    \item VersÃ£o da OpenGL ES
     \item Android NDK           
     \item Tamanhos e densidade das telas
-    \item Línguas internacionais
+    \item LÃ­nguas internacionais
 \end{itemize}
 
 % ..............................................................................
 \section{Mecanismos de controle de variabilidades}
 \begin{itemize}
     \item  Polimorfismo
-    \item Reflexão
+    \item ReflexÃ£o
     \item Classe wrapper
-    \item Checagens de versão da API e de recursos do aparelho em tempo de execução
-    \item Atributos final e Compilação Condicional 
-    \item Recursos da Aplicação
+    \item Checagens de versÃ£o da API e de recursos do aparelho em tempo de execuÃ§Ã£o
+    \item Atributos final e CompilaÃ§Ã£o Condicional 
+    \item Recursos da AplicaÃ§Ã£o
 \end{itemize}
 
 % ..............................................................................
 \subsection{Polimofirmo}
-No Froid, o controle das variabilidades para a Fonte das fortunes é feita através 
-da implementação da interface FortuneProvider.
+No Froid, o controle das variabilidades para a Fonte das fortunes Ã© feita atravÃ©s 
+da implementaÃ§Ã£o da interface FortuneProvider.
 
 \includegraphics[width=10cm]{img/implementacao_FortuneProvider}
 \includegraphics[width=10cm]{img/instaciando_provider}
 \includegraphics[width=10cm]{img/FortuneProviderUtils}
 % ------------------------------------------------------------------------------
-\subsection{Reflexão}
+\subsection{ReflexÃ£o}
 
 Texto + imagens do slide 22
 
@@ -325,13 +252,13 @@ Texto + imagens do slide 22
 Texto + imagens dos slides 23-25
 
 % ..............................................................................
-\subsection{Checagem da versão em tempo de execução}
+\subsection{Checagem da versÃ£o em tempo de execuÃ§Ã£o}
 
 Texto + imagens dos slides 26
 
 % ..............................................................................
-\subsection{Checagem da existência de um determinado recurso}
-Pode-se utilizar o método PackageManager.hasSystemFeature() para determinar se o 
+\subsection{Checagem da existÃªncia de um determinado recurso}
+Pode-se utilizar o mÃ©todo PackageManager.hasSystemFeature() para determinar se o 
 dispositivo possi um determinado recurso
 
 % ..............................................................................
@@ -341,31 +268,31 @@ Texto + imagens dos slides 28
 
 
 % ..............................................................................
-\subsection{Compilação condicional}
+\subsection{CompilaÃ§Ã£o condicional}
 
 Texto + imagens do slide 29
 
 
 % ..............................................................................
-\subsection{Recursos da aplicação}
+\subsection{Recursos da aplicaÃ§Ã£o}
 
 Texto + imagens dos slides 30-34
 
 
 % ..............................................................................
-\subsection{Compartilhamento de informações}
+\subsection{Compartilhamento de informaÃ§Ãµes}
 
 Texto + imagens dos slides 25
 
 
 % ==============================================================================
-\chapter{Conclusão}
+\chapter{ConclusÃ£o}
 
 % ..............................................................................
-\section{Pré-avaliação}
-Em se tratando de gerência da variabilidades, há todo um campo de estudo pela 
+\section{PrÃ©-avaliaÃ§Ã£o}
+Em se tratando de gerÃªncia da variabilidades, hÃ¡ todo um campo de estudo pela 
 frente \\
-Com os mecanismos atuais, as aplicações ficarão inchadas
+Com os mecanismos atuais, as aplicaÃ§Ãµes ficarÃ£o inchadas
 
 % ------------------------------------------------------------------------------
 \section{Trabalhos futuros}
