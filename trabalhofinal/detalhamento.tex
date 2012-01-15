@@ -357,6 +357,10 @@ isso seja possível de forma transparente para o usuário.
 
 % ..............................................................................
 \section{Mecanismos de controle de variabilidades}
+
+Nessa seção, discutiremos os mecanismos fornecidores na plataforma Android que 
+poderão ser utilizados para tratar os diversos pontos de variações apresentados.
+
 \begin{itemize}
     \item Polimorfismo
     \item Reflexão
@@ -369,25 +373,146 @@ isso seja possível de forma transparente para o usuário.
 \end{itemize}
 
 % ..............................................................................
-\subsection{Polimofirmo}
-No Froid, o controle das variabilidades para a Fonte das fortunes é feita através 
-da implementação da interface FortuneProvider.
+\subsection{Polimorfismo}
 
-\includegraphics[width=10cm]{img/implementacao_FortuneProvider}
-\includegraphics[width=10cm]{img/instaciando_provider}
-\includegraphics[width=10cm]{img/FortuneProviderUtils}
+Conforme pode ser observado na Figura \ref{fortunes_fm}, a origem das frases do 
+Froid pode ser um banco de dados local ou a Internet, através de um web-service.
+Essa distinção foi feita através da implementação de uma interface Java: 
+{\it FortuneProvider}.
+Para cada tipo de fonte, foi feita uma implementação dessa interface: 
+{\it FortuneProviderDatabase} para o banco de dados e {\it FortuneProviderService} para webservice. 
+Além desses, analisando o código fonte foi identificado uma terceira fonte de dados, 
+{\it FortuneProviderStatic}, que contém frases definidas estaticamente no código, e é 
+utilizada para testes das demais funcionalidades da aplicação.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=10cm]{img/implementacao_FortuneProvider}
+    \caption{Diagrama de classes, mostrando a interface e suas implementações}
+    \label{diagrama_classes}
+\end{figure}
+
+A fim de facilitar a instanciação dos providers, foi definido uma classe 
+instanciadora, {\it FortuneProviderUtils}, apresentada na Figura \ref{provider_utils}.
+Na Figura \ref{instanciando_provider}, podemos ver essa classe sendo utilizada para 
+instanciar um provider. Sendo que a definição da fonte, se será banco de dados, 
+webservice ou estático é feita de forma manual, durante a compilação.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=10cm]{img/FortuneProviderUtils}
+    \caption{Classe FortuneProviderUtils}
+    \label{instaciando_provider}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=10cm]{img/instaciando_provider}
+    \caption{Instanciando um provider em específico}
+    \label{instaciando_provider}
+\end{figure}
+
 % ------------------------------------------------------------------------------
-\subsection{Reflexão}
 
-Texto + imagens do slide 22
+\subsection{Compatibilidade com versões antigas da API}
+
+A API do Android evolui oferecendo novos recursos para os desenvolvedores utilizarem.
+No entanto, eles também desejam que suas aplicações continuem executando em 
+dispositivos com versões anteriores, sem o novo recurso.
+
+Isso será possível para recursos não essenciais, como um virtual mesmo que um teclado físico esteja disponível. Então você poderá escrever sua aplicação para usar o novo 
+recurso sem que ela falhe em dispositivos antigos. Há duas formas para atingir esse objetivos, discutidos a seguir.
+
+\subsubsection{Reflexão}
+
+Suponha que se deseje utilizar um novo método, introduzido em nova versão da API,
+como {\it android.os.Debug.dumpHprofData(String filename)}. A classe {\it android.os.Debug}
+já existia desde a primeira versão do SDK, mas o método foi adicionado somente na versão 
+1.5, se você acessá-lo diretamente, sua aplicações irá falar em dispositivos antigos.
+
+A maneira mais simples para chamar o método é através de reflexão. Será feita uma 
+verificação se o método existe, e o resultado será armazenado em um objeto {\it Method}.
+Quando for necessário o método ser executado, isso será feito através de 
+{\it Method.invoke}. Considere a Figura \ref{class_reflect1}:
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=10cm]{img/reflect1}
+    \caption{Trecho da classe Reflect onde é verificado se o método existe (Fonte \cite{back_compat})}
+    \label{class_reflect1}
+\end{figure}
+
+A Figura \ref{class_reflect1} mostra que o método {\it initCompatibility} é executado
+ estaticamente e é responsável por verificar se o método existe. Se sim, usa um método 
+ privado com a mesma assinatura do original para poder chamá-lo. 
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=10cm]{img/reflect2}
+    \caption{Trecho da classe Reflect onde o método é executado (Fonte \cite{back_compat})}
+    \label{class_reflect2}
+\end{figure}
+
+A Figura \ref{class_reflect2} demostra como a aplicação pode escolher entre chamar 
+a nova API ou fazer algo diferente baseado na existência ou não do novo método.
+
+Para cada método adicional que você queira executar, deverá adicionar um atributo 
+{\it Method}, um atributo inicializador, e um empacotador da chamada para a classe.
+
+Essa abordagem ficará complexa quando o método está declarado em um classe que não 
+existia anteriormente. Além disso, chamar {\it Method.invoke()} será mais lento 
+que invocar o método diretamente. Esses problemas podem ser diminuídos usando uma
+classe empacotadora.
 
 % ..............................................................................
-\subsection{Classe wrapper}
+\subsubsection{Classe empacotadora}
 
-Texto + imagens dos slides 23-25
+A ideia é criar uma classe que empacota toda a nova classe. Cada método na classe 
+empacotadora (wrapper) apenas executa o método real correspondente, repassando os 
+parâmetros, e retorna o mesmo resultado.
+
+Se a classe alvo e o método existem, você irá ter o mesmo comportamento que teria se 
+executasse a classe diretamente. Se a classe ou método não existem, a inicialização
+da classe empacotadora falha, e sua aplicação sabe que deverá evitará usar os novos 
+métodos.
+
+Suponha que a classe apresentada na Figura \ref{wrapper1} seja uma nova classe adicionada.
+Nós deveremos criar uma classe empacotadora para ele, apresentada na Figura \ref{wrapper2}.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=10cm]{img/wrapper1}
+    \caption{Nova classe (Fonte: \cite{back_compat})}
+    \label{wrapper1}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=10cm]{img/wrapper2}
+    \caption{Classe empacotadora (Fonte: \cite{back_compat})}
+    \label{wrapper2}
+\end{figure}
+
+A classe empacotadora tem um método para cada construtor e cada método no original,
+mais uma inicializador estático que testa se a nova classe existe. Se a nova classe
+não está disponível, a inicialização de {\it WrapNewClass} irá falhar, assegurando
+que classe empacotadora não seja utilizada indevidamente. O método {\it checkAvailable} 
+é usado como um meio simples para forçar a inicialização da classe. A Figura \ref{wrapper3}
+mostra como isso deverá ser utilizado.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=10cm]{img/wrapper3}
+    \caption{Utilizando a classe empacotadora (Fonte: \cite{back_compat})}
+    \label{wrapper3}
+\end{figure}
+
+Se a chamada para {\it checkAvailable} for feita com sucesso, saberemos que a nova
+classe faz parte do sistema. Se falar, saberemos que ela não está presente, então
+poderemos ajustar a execução da aplicações de acordo com isso.
 
 % ..............................................................................
-\subsection{Checagem da versão em tempo de execução}
+\subsection{Checagem da versão da API em tempo de execução}
 
 Texto + imagens dos slides 26
 
