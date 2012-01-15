@@ -133,27 +133,93 @@ segurança, gerência de memória, gerência de processos, pilha de rede e model
 drivers. O núcleo também atua como uma camada abstrata entre o hardware e o resto
 da pilha de sofware.
 
-\subsection{Arquitetura de aplicações Android}
+\subsection{Visão geral sobre as aplicações Android}
+
+Aplicações Android são escritas na linguagem de programação Java. O Android SDK
+ compila o código - juntamente com seus dados e demais arquivos - em um pacote 
+ Android, um arquivo com a extensão .apk. É este arquivo que será instalado nos 
+ dispositivos.
+
+Uma aplicação pode ter quatro tipos de componentes:
+\begin{itemize}
+    \item Activity: representa uma tela única na interface com o usuário, e podem 
+    ser traduzidas para o português como atividades. As atividades
+    de uma aplicação são independentes uma das outras, o que possibilita que outra aplicação 
+    abra uma atividade (desde de que tenha as permissões necessárias), sem que seja
+    necessário abrir a aplicação desta atividade
+    Cada atividade é implementada como uma subclasse de Activity. E a definição 
+    completa está em \cite{activity}
+    \item Service: é um componente que executa em background, sem interface com 
+    usuário. Outro componente, como uma atividade, pode iniciar o serviço e deixá-lo 
+    em execução ou interagir com ele. Um serviço é implementado como uma subclasse de 
+    Service. E a definição completa está em \cite{service}
+    \item Content providers: gerencia um conjunto de dados compartilhados da aplicação. 
+    Através deste componente, outras aplicações podem consultar ou mesmo modificar 
+    dados (se for permitido). Um provedor de conteúdo é implementado como uma subclasse 
+    de ContentProvider e deve implementar um conjunto padrão de API's que permite 
+    às outras aplicações realizarem as transações. Um detalhamento sobre os provedores
+    de conteúdo está em \cite{providers}
+    \item Broadcast receivers: é um componente que responde a mensagens enviada ao 
+    sistema operacional. Essas mensagens podem ser originadas do próprio sistema, 
+    como um alerta de do nível de bateria, por exemplo, ou podem ser enviada por 
+    aplicações. Dessa forma, podem ser úteis para fazer a integração entre aplicações.
+    Um "broadcast receiver" é implementado como uma subclasse de BroadcastReceiver.
+\end{itemize}
+
+Um característica única em sistemas Android é que qualquer aplicação pode iniciar 
+um componente de uma outra aplicação. Por exemplo, se você quer enviar alguma mensagem
+para o Twitter, provavelmente irá utilizar uma outra aplicação que já faz isso, em vez
+de desenvolver uma atividade dentro da sua própria aplicação. Você não precisará 
+nem mesmo incorporar ou linkar o código do aplicação do Twitter. Em vez disso, você
+simplesmente inicia a aplicação que enviará a mensagem e depois retornará para a sua 
+aplicação. Para o usuário, irá parecer que o cliente do Twitter é parte da sua aplicação.
+
+Como cada aplicação é executa em um processo separado, com permissões que restrigem 
+o acesso de outras aplicações, sua aplicação não ativa diretamente um componente de 
+outra aplicação. O sistema Android é que faz isso. Assim, para ativar um componente 
+em outra aplicação, você deve enviar uma mensagem para o sistema que determina sua 
+intenção de iniciar um componente em particular. Então, o sistema ativa o componente 
+para você.
+
+Essa flexibilidade é possível graças ao ciclo de vida das atividades, descrito na 
+seção seguinte.
+
+\subsubsection{Ciclo de vida de uma atividade}
+
+Diferentemente de aplicações em outros sistemas, aplicações Android não possuem 
+um único ponto de entrada. Não existe uma função main(), comum na classe principal 
+das aplicações Java. O ciclo de vida de uma atividade é apresentada na Figura \ref{Activity_lifecycle}
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=10cm]{img/Activity_lifecycle}
-    \caption{Ciclo de vida de uma activity}
+    \includegraphics[width=10cm]{img/android_lecheta}
+    \caption{Ciclo de vida de uma activity (Fonte: \cite{lecheta})}
     \label{Activity_lifecycle}
 \end{figure}
 
+Todos os métodos apresentados na Figura \ref{Activity_lifecycle} são métodos 
+da classe Activity, que deverão ser sobrescritos pelas aplicações, e a chamada a esses
+métodos ficara a cargo do sistema operacional.
 
-\begin{itemize}
-    \item Não existe método main()
-    \item Uma aplicação pode ter quatro tipos de componentes:
-    \item Activity: interfaces com o usuário (tela)
-    \item Service: executa em background, sem interface com o usuário
-    \item Broadcast receivers: apenas recebe e reage a mensagens de broadcast
-    \item Content providers: compartilhar dados da aplicações com outras aplicações
-\end{itemize}
+Além desses métodos há um outro importante método automaticamente executado e de 
+grande importância do que diz respeito a salvar o estado atual da aplicação: 
+{\it onSaveInstanceState(Bundle)}. Este método é executado antes da atividade entrar em 
+background, permitindo que seja salvo estado dinâmico em um objeto {\it Bundle}, para depois 
+ser recuperado em {\it onCreate(Bundle)}, se a atividade precisa ser recriada. No entanto,
+em relação a dados persistentes é necessário que eles sejam salvos no método {\it onPause()}, 
+já que o {\it onSaveInstanceState(Bundle)} não faz parte do ciclo de vida, não sendo chamado 
+em todas as situações.
 
 % ------------------------------------------------------------------------------
 \section{Estudo de caso: Froid - Fortunes for Android}
+
+Como estudo de caso, utilizamos uma aplicação disponibilizada por \cite{abp}, a 
+Froid - Fortunes por Android. Essa aplicação visa disponibilizar um widget que 
+mostre frases aos usuários, sendo possível buscar mais frases na Internet. 
+
+Com base na documentação disponibilizada, definimos uma versão preliminar do feature 
+model da aplicação, apresentado na Figura \ref{fortunes_fm}. Quando possível, utilizaremos
+esta aplicação como exemplo para os conceitos apresentados.
 
 \begin{figure}[h]
     \centering
@@ -162,30 +228,138 @@ da pilha de sofware.
     \label{fortunes_fm}
 \end{figure}
 
+
+
+Um dos elementos de variação mais óbvios nos dispositivos móveis é o tamanho das telas.
+Além disso, os aparelhos podem estar na posição vertical ou retrato, e, idealmente, 
+as aplicações devem se adequar corretamente, aproveitando os espaços disponíves, ou 
+adequando-se ao pouco espaço. O Android já fornece um mecanismo de layout relativo,
+e como a interface do Froid é bastante simples, não foi necessário a definição de 
+mais de um layout, no entanto, foi necessário implementar o {\it onSaveInstanceState(Bundle)}
+para que quando o usuário rotacionasse o dispositivo, a frase exibida não fosse alterada, 
+conforme exibido na Figura \ref{onSaveInstanceState}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=10cm]{img/onSaveInstanceState}
+    \caption{Método {\it onSaveInstanceState(Bundle)} da aplicação Froid}
+    \label{onSaveInstanceState}
+\end{figure}
+
+
 % ..............................................................................
 \section{Pontos de variações em dispositivos com Android}
 
+Nessa seção, apresentaremos os pontos de variação em dispositivos com Android,
+quando possível apresentaremos um exemplo com a aplicação Froid ou a de Times(?????)
+
+\subsection{Versão da API}
+
+A primeira versão da API do Android foi disponibilizada em outubro de 2008. De lá 
+para cá, ele vem passando por diversas modificações, sendo a maioria deles ou 
+introdução ou substituições de funcionalidades. Como partes da API são autualizadas, 
+as partes antigas são marcadas como obsoletas e não removidas, assim aplicações feitas
+com versões antigas da API continuarão funcionando nas mais recentes.
+
+As versões da API são identificadas por um valor inteiro único chamado de {\it API Level},
+distribuidas juntamente com as versões da plataforma Android. A Figura \ref{api_level} 
+apresenta a relação entre versão da plataforma e {\it API Level}, além da distribuição.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=15cm]{img/api_level}
+    \caption{Distribuição da versão da plataforma e API Level (Fonte: \cite{platform_versions}) }
+    \label{api_level}
+\end{figure}
+
+\subsection{Tamanhos e densidade das telas}
+
+O Android executa em uma grande variedade de dispositivos, com diferentes tamanhos
+ de telas e densidades. Para facilitar o projeto de interface para diferentes 
+ configurações, a plataforma divide os atuais intervalos de tamanhos de telas e
+ densidades em grupos, conforme abaixo:
 \begin{itemize}
-    \item Versão da API
-    \item Dispositivos com ou sem sensores
-    \item Gráficos 2D ou 3D
-    \item Mecanismo de interação
-    \item Pacote de compatibilidade
-    \item Versão da OpenGL ES
-    \item Android NDK           
-    \item Tamanhos e densidade das telas
-    \item Línguas internacionais
+    \item Tamanhos de tela: small, normal, large, e xlarge
+    \item Densidades: ldpi (low), mdpi (medium), hdpi (high), e xhdpi (extra high)
 \end{itemize}
+ 
+A Figura \ref{intervalos_telas} ilustra como os diferentes tamanhos de telas 
+(em polegadas) e 
+densidades (em dpi) são categorizados nesses diferentes grupos.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=15cm]{img/intervalos_telas}
+    \caption{Relação entre tamanhos de telas e densidades e seus respectivos grupos 
+        (Fonte: \cite{sup_multi_screens}) }
+    \label{intervalos_telas}
+\end{figure}
+
+A Figura \ref{distribuicao_telas} apresenta a distribuição atual de tamanhos 
+de tela e densidade.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=15cm]{img/api_level}
+    \caption{Distribuição atual de tamanhos de tela e densidades (Fonte: \cite{sup_multi_screens})}
+    \label{distribuicao_telas}
+\end{figure}
+
+
+\subsection{Versão da OpenGL ES}
+
+O Android oferece suporte para gráficos otimizados através de uma biblioteca 2D 
+customizada. Quando suportado pelo hardware do dispositivo, gráficos 3D serão 
+providos pela biblioteca OpenGL ES. A Figura \ref{distribuicao_opengl} apresenta 
+a distribuição atual de versões dessa biblioteca encontradas nos aparelhos.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=15cm]{img/opengl}
+    \caption{Distribuição atual da OpenGL ES (Fonte: \cite{opengl_versions})}
+    \label{distribuicao_opengl}
+\end{figure}
+
+
+\subsection{Sensores do dispositivo}
+
+Android oferece suporte para diversos tipos de sensores e hardware presentes nos 
+dispositivos. Contudo, nem todos os dispositivos terão todos os tipos de sensores.
+Sensores e hardware que poderão ou não estar presentes nos dispositivos incluem:
+\begin{itemize}
+    \item Acelerômetro
+    \item Câmera
+    \item Sensor de luminosidade
+    \item Bluetooth
+    \item Wifi
+    \item Live wallpaper
+    \item GPS
+    \item Microfone
+    \item Sensor de proximidade
+    \item Telefone VoIP baseado em SIP
+    \item Telefonia CDMA e/ou GSM
+    \item Tela sensível a toque e/ou multitoque
+    \item USB
+\end{itemize}
+
+
+\subsection{Mecanismo de interação}
+
+
+\subsection{Línguas internacionais}
+
 
 % ..............................................................................
 \section{Mecanismos de controle de variabilidades}
 \begin{itemize}
-    \item  Polimorfismo
+    \item Polimorfismo
     \item Reflexão
     \item Classe wrapper
     \item Checagens de versão da API e de recursos do aparelho em tempo de execução
     \item Atributos final e Compilação Condicional 
     \item Recursos da Aplicação
+    \item Android NDK
+    \item Pacote de compatibilidade
 \end{itemize}
 
 % ..............................................................................
