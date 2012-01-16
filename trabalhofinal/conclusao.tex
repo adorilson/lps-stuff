@@ -1,12 +1,16 @@
 \chapter{Conclusão}
 
-% ..............................................................................
-\section{Pré-avaliação}
-Em se tratando de gerência da variabilidades, há todo um campo de estudo pela 
-frente \\
-Com os mecanismos atuais, as aplicações ficarão inchadas
+A plataforma Android oferece diversos mecanismos para o tratamento de variabilidades
+em aplicações. No entanto, esses mecanismos vão no caminho de permitir a criação 
+de um único APK capaz de ser instalado em qualquer dispositivo. Do ponto de vista 
+de mercado isso é bom, na medida que o usuário não precisará pensar sobre qual 
+versão deveria instalar no seu dispositivo, caso outra abordagem fosse escolhida.
 
-% ------------------------------------------------------------------------------
-\section{Trabalhos futuros}
- Implementar ou estudar uma LPS de fato para o Android 
+Por outro lado, os pacotes poderão ficar demasiadamente e desnecessariamente grande.
+Carregarão recursos que nunca serão utilizados por um dado dispositivo, e também 
+terão trechos de código que nunca serão executados.
 
+Além disso, existem as variabilidades própria da aplicação. Atualmente, um modelo 
+de distribuição bastante comum é existência de diversas versões da aplicações, com 
+mais ou menos recursos, por exemplo, pode-se ter uma versão gratuita e uma versão paga. 
+Embora a compilação condicional, aliada a outras técnicas possam ser utilizadas para essa distinção, é necessário aprofundar os estudos nessa área.

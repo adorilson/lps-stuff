@@ -3,12 +3,9 @@
 \chapter{Detalhamento de trabalho}
 
 Nesse capítulo, apresentaremos a arquitetura da plataforma Android, assim como o
-ciclo de vida de uma aplicação para essa plataforma. Por fim, discutiremos os 
+ciclo de vida de uma aplicação para essa plataforma e os pontos de variações 
+entre os dispositivos. Por fim, discutiremos os 
 mecanismos de controle das variabilidades.
-
- Estudo das variabilidades da plataforma
- Mecanismos de controle
- Exemplos do Estudo de caso, quando possível
 
 % ------------------------------------------------------------------------------
 \section{Plataforma Android}
@@ -116,7 +113,7 @@ framework". Algumas das principais bibliotecas são listadas a seguir:
 
 \subsubsection{Android Runtime}
 
-Android inclui um conjunto de biblitocas básicas que provê a maioria das funcionalidades
+Android inclui um conjunto de bibliotecas básicas que provê a maioria das funcionalidades
 disponíveis na biblioteca padrão da linguagem de programação Java.
 
 Cada aplicação Android executa em seu próprio processo, com sua própria instância 
@@ -228,30 +225,11 @@ esta aplicação como exemplo para os conceitos apresentados.
     \label{fortunes_fm}
 \end{figure}
 
-
-
-Um dos elementos de variação mais óbvios nos dispositivos móveis é o tamanho das telas.
-Além disso, os aparelhos podem estar na posição vertical ou retrato, e, idealmente, 
-as aplicações devem se adequar corretamente, aproveitando os espaços disponíves, ou 
-adequando-se ao pouco espaço. O Android já fornece um mecanismo de layout relativo,
-e como a interface do Froid é bastante simples, não foi necessário a definição de 
-mais de um layout, no entanto, foi necessário implementar o {\it onSaveInstanceState(Bundle)}
-para que quando o usuário rotacionasse o dispositivo, a frase exibida não fosse alterada, 
-conforme exibido na Figura \ref{onSaveInstanceState}
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=10cm]{img/onSaveInstanceState}
-    \caption{Método {\it onSaveInstanceState(Bundle)} da aplicação Froid}
-    \label{onSaveInstanceState}
-\end{figure}
-
-
 % ..............................................................................
 \section{Pontos de variações em dispositivos com Android}
 
 Nessa seção, apresentaremos os pontos de variação em dispositivos com Android,
-quando possível apresentaremos um exemplo com a aplicação Froid ou a de Times(?????)
+quando possível apresentaremos um exemplo com a aplicação Froid, ou trecho diversos.
 
 \subsection{Versão da API}
 
@@ -361,17 +339,6 @@ isso seja possível de forma transparente para o usuário.
 Nessa seção, discutiremos os mecanismos fornecidores na plataforma Android que 
 poderão ser utilizados para tratar os diversos pontos de variações apresentados.
 
-\begin{itemize}
-    \item Polimorfismo
-    \item Reflexão
-    \item Classe wrapper
-    \item Checagens de versão da API e de recursos do aparelho em tempo de execução
-    \item Atributos final e Compilação Condicional 
-    \item Recursos da Aplicação
-    \item Android NDK
-    \item Pacote de compatibilidade
-\end{itemize}
-
 % ..............................................................................
 \subsection{Polimorfismo}
 
@@ -402,14 +369,14 @@ webservice ou estático é feita de forma manual, durante a compilação.
     \centering
     \includegraphics[width=10cm]{img/FortuneProviderUtils}
     \caption{Classe FortuneProviderUtils}
-    \label{instaciando_provider}
+    \label{provider_utils}
 \end{figure}
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=10cm]{img/instaciando_provider}
     \caption{Instanciando um provider em específico}
-    \label{instaciando_provider}
+    \label{instanciando_provider}
 \end{figure}
 
 % ------------------------------------------------------------------------------
@@ -421,7 +388,18 @@ No entanto, eles também desejam que suas aplicações continuem executando em
 dispositivos com versões anteriores, sem o novo recurso.
 
 Isso será possível para recursos não essenciais, como um virtual mesmo que um teclado físico esteja disponível. Então você poderá escrever sua aplicação para usar o novo 
-recurso sem que ela falhe em dispositivos antigos. Há duas formas para atingir esse objetivos, discutidos a seguir.
+recurso sem que ela falhe em dispositivos antigos. Algumas formas de manter essa 
+compatibilidade serão descritas a seguir.
+
+\subsubsection{Pacote de compatibilidade}
+
+O pacote de compatibilidade (Support Package) é fornecido também pelo distribuidor do 
+Android SDK, e inclue "bibliotecas de compatibilidade" estática que os desenvolvedores 
+poderão adicionar em suas aplicações com o fim de usar API's que não estão disponíveis 
+em versões antigas da plataforma ou que oferecem API's utilitárias que não fazem 
+parte da API padrão. O objetivo é simplificar o desenvolvimento oferecendo mais 
+recursos para serem utilizados nas aplicações, assim não será necessário preocupações
+a acerca das versões da plataforma.
 
 \subsubsection{Reflexão}
 
@@ -514,33 +492,263 @@ poderemos ajustar a execução da aplicações de acordo com isso.
 % ..............................................................................
 \subsection{Checagem da versão da API em tempo de execução}
 
-Texto + imagens dos slides 26
+Em alguns casos, alguns comportamentos estarão tão dependentes da versão da API, que
+será necessário descobrir em tempo de execução a versão da API no dispositivo.
+\cite{check_version} apresenta um caso em que o comportamento do multitoque sofreu mudanças significativas
+entre as versões da API. Para resolver esse problema foi criado uma classe abstrata ({\it VersionedGestureDetector}) ,
+e classes que herdavam dessa ({\it CupcakeDetector, EclairDetector e FroyoDetector}) , com implementações específicas para 3 versões da API.
+Em tempo de execução, era instanciada a classe adequada, conforme mostra a Figura
+\ref{fig_check_version}.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=10cm]{img/versao}
+    \caption[Instanciando objeto de acordo com a versão do Android do dispositivo]{Instanciando objeto de acordo com a versão do Android do dispositivo (Fonte: \cite{check_version})}
+    \label{fig_check_version}
+\end{figure}
+
+Isso é possível, e bastante simples, graças ao atributo {\it Build.VERSION.SDK}, 
+ou \\ {\it Build.VERSION.SDK\_INT} em versões mais recentes, que representa a versão 
+da 
+API no dispositivo, e {\it Build.VERSION\_CODES} que possui constantes com os valores 
+das versões da API. Bastando fazer uma comparação entre eles para que seja determinada
+a versão a ser instanciada.
 
 % ..............................................................................
 \subsection{Checagem da existência de um determinado recurso}
-Pode-se utilizar o método PackageManager.hasSystemFeature() para determinar se o 
-dispositivo possi um determinado recurso
+
+Devido a variação de hardware existente entre os aparelhos, alguns recursos poderão
+não estar disponível. Para que as aplicações saibam se um recurso está presente 
+ a API do Android disponibiliza uma classe que auxilia nessa questão: {\it PackageManager}.
+Essa classe possui diversos atributos que representam recursos diversos, esses
+ atributos serão utilizados como parâmetros para o método {\it PackageManager.hasSystemFeature()}, que informará se o recurso está ou não disponível. 
+ 
+Dessa forma, as aplicações poderão utilizar o recurso, ou usar um meio alternativo.
+Além disso, a documentação da API recomenda que mesmo que se saiba da existência 
+do recurso, ele não deve ser acessado sem antes ser confirmado que realmente está 
+disponível.
 
 % ..............................................................................
-\subsection{Atributos com modificadores final}
+\subsection{Atributos com modificadores final e compilação condicional}
 
-Texto + imagens dos slides 28
+Os mecanismos apresentados anteriormente serão úteis em tempo de execução, no entanto
+algumas variações são determinados em tempo de compilação. Alguns desenvolvedores 
+costumam fazer esse controle comentando e descomentado trechos de código antes de 
+cada compilação, no entanto isso não é uma boa prática de programação. Torna o código
+com baixa manutenabilidade e muito propenso a erros. Essa é a forma atualmente utilizada 
+no Froi para determinar a fonte de dados das frases.
 
+Há algumas formas mais elegantes de fazer esse controle, entre eles compilação condicional 
+e atributos com modificadores {\it final}. Compilação condicional é uma forma 
+bastante utilizada em aplicações na linguagem C, não tendo suporte nativo na linguagem 
+Java, onde serão utilizados atributos com modificadores {\it final}. Um exemplo didático 
+desse uso está na Figura \ref{atributo_final}
 
-% ..............................................................................
-\subsection{Compilação condicional}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=10cm]{img/MyClass}
+    \caption{Exemplo de uso de atributo final}
+    \label{atributo_final}
+\end{figure}
 
-Texto + imagens do slide 29
-
+No entanto, há pelo menos um caso para a plataforma Android que esse mecanismo não será suficiente, sendo necessário o uso da compilação condicional, que deverá ser garantida por uma 
+ferrameta auxiliar. As aplicações em Android são identificadas pelo pacote que as contém,
+não podendo haver duas aplicações com o mesmo pacote, ou seja o valor do modificador 
+{\it package} nos arquivos Java deverá ser único. Se você deseja criar duas versões de uma aplicação, 
+deverá coloca-los em pacotes diferentes. Para esse caso, será necessário a compilação 
+condicional.
 
 % ..............................................................................
 \subsection{Recursos da aplicação}
 
-Texto + imagens dos slides 30-34
+A maioria dos mecanismos apresentados anteriormente são possíveis graças à linguagem Java
+e seu suporte para programação orientada a objetos, não sendo exclusivos da plataforma Android.
+
+Um dos conceitos mais importantes da plataforma Android são os Recursos da Aplicação. 
+Recurso é tudo aquilo que pode ser externo ao código-fonte da aplicação, como imagens, 
+strings, layouts etc. Fazendo dessa forma, esses elementos poderão ser atualizados de 
+forma independente. Além disso, será possível disponibilizar recursos alternativos
+que suportam configurações especificadas de dispositivos, como idiomas diferentes 
+ou tamanhos de telas. Um exemplo da aplicação dessa técnica é apresentada nas Figuras 
+\ref{um_layout} e \ref{dois_layout}.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=10cm]{img/resource_devices_diagram1}
+    \caption{Dois dispositivos diferentes usando o mesmo layout}
+    \label{um_layout}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=10cm]{img/resource_devices_diagram2}
+    \caption{Dois dispositivos diferentes, cada um usando um layout específico para o seu tamanho de tela}
+    \label{dois_layout}
+\end{figure}
+
+O Froid não utiliza esse recurso para layout, só existe um layout disponível. Mas
+poderia existir um para tela pequena e outra para telas grandes. Considerando as 
+categorias das frases, para as telas pequenas elas poderiam ser listadas, e quando
+o usuário selecionar alguma delas, abrir um outra tela com a frase. Para as telas
+grandes, as frases poderiam ser exibidas na mesma tela que as categorias.
+
+Para garantir essa compatibilidade com diferentes configurações, você deve organizar
+os recursos no diretório {\it res/} do projeto, usando vários sub-diretórios que 
+agruparão recursos pelo tipo e configuração. Um exemplo pode ser visto na Figuras
+\ref{dir_res}.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=5cm]{img/diretorio_resources}
+    \caption{Exemplo de diretório {\it res/} e seus sub-diretórios}
+    \label{dir_res}
+\end{figure}
+
+As imagens deverão ficar nos diretórios {\it drawable*}, de acordo com a densidade 
+(ldpi, mdpi ou hdpi) do aparelho. Os arquivos XML de layout ficarão nos 
+sub-diretórios {\it layout*}. E as mensagens do aplicativo ficarão no 
+sub-diretório {\it values*}. Aqui podemos perceber que haverá um layout e um 
+conjunto de mensagens padrões, e um layout e mensagens a ser utilizados pelo aparelhos com tamanho de tela "large" e com a versão 11 da API. Dentro de {\it values*} as 
+mensagens serão ainda identificadas pelo idioma. 
+
+Na plataforma Android, os recursos no diretório {\it res/} 
+serão mapeados para um classe {\it R}, gerada automaticamente. Quando o desenvolvedor
+precisar utilizar qualquer recurso, basta acessar os atributos dessa classe, sem 
+necessidade de referenciar a configuração especifica. Isso ficará a cargo da plataforma.
+
+Os possíveis tipos de recursos são os seguintes:
+\begin{itemize}
+    \item Animações
+        \begin{itemize}
+            \item Define animações pre-determinadas
+            \item Animações interpoladas são salvas em {\it res/anim/} e acessadas 
+            pela classe {\it R.anim}
+            \item Animações em frame são salvas em {\it res/drawable/} e acessadas 
+            pela classe {\it R.drawable}
+        \end{itemize}
+    \item Cores de estados
+        \begin{itemize}
+            \item Define recursos de cor que mudam baseadas no estada da View
+            \item São salvas em {\it res/color/} e acessadas pela classe {\it R.color}
+        \end{itemize}
+    \item Elementos gráficos
+        \begin{itemize}
+            \item Define vários elementos gráficos com bitmaps ou XML
+            \item São salvas em {\it res/drawable/} e acessadas pela classe {\it R.drawable}
+        \end{itemize}
+    \item Layout
+        \begin{itemize}
+            \item Define o layout das interfaces com o usuário
+            \item São salvas em {\it res/layout/} e acessadas pela classe {\it R.layout}
+        \end{itemize}
+    \item Menus
+        \begin{itemize}
+            \item Define o conteúdo dos menus da aplicação
+            \item São salvos em {\it res/menu/} e acessados pela classe {\it R.menu}
+        \end{itemize}
+    \item Strings
+        \begin{itemize}
+            \item Define strings, arrays de string e plurais (e inclue formataçao 
+            e estilo das strings)
+            \item São salvos em {\it res/values} e acessados pelas classes 
+            {\it R.string, R.array e R.plurals}
+        \end{itemize}
+    \item Estilos
+        \begin{itemize}
+            \item Define a aparência e formato dos elementos da interface gráfica
+            \item São salvos em {\it res/values/} e acessadas pela classe {\it R.Style}
+        \end{itemize}
+    \item Outros tipos
+        \begin{itemize}
+            \item Define valores lógicos, inteiros, dimensões, cores, e outros arrays.
+            \item São salvos em {\it res/values/}, mas cada um é acessado por sub-classes
+            de {\it R}, como {\it R.bool, R.integer, R.dimen} etc.
+        \end{itemize}
+\end{itemize}
+
+Esses recursos são automaticamente
+selecionados pela plataforma, sendo transparente para o desenvolvedor. No entanto,
+em alguns caso, é necessário tomar algumas medidas, como aconteceu com o Froid.
+
+Um dos elementos de variação mais óbvios nos dispositivos móveis é justamente o tamanho das telas. Além disso, os aparelhos podem estar na posição vertical ou retrato, e, idealmente, 
+as aplicações devem se adequar corretamente, aproveitando os espaços disponíves, ou 
+adequando-se ao pouco espaço. O Android já fornece um mecanismo de layout relativo,
+e como a interface do Froid é bastante simples, não foi necessário a definição de 
+mais de um layout, no entanto, foi necessário implementar o {\it onSaveInstanceState(Bundle)}
+para que quando o usuário rotacionasse o dispositivo, a frase exibida não fosse alterada, 
+conforme exibido na Figura \ref{onSaveInstanceState}. 
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=15cm]{img/onSaveInstanceState}
+    \caption{Método {\it onSaveInstanceState(Bundle)} da aplicação Froid}
+    \label{onSaveInstanceState}
+\end{figure}
+
+A Figura \ref{onCreate} mostra a implementação do método {\it onCreate(Bundle)} da 
+atividade principal do Froid, com alguns trechos em destaque. Na região 1 veja a 
+como a atividade é desenhada simplesmente chamando o método {\it setContentView()}, 
+passado como padrão o nome do layout, que foi definido em um arquivo XML. Na 
+região 2, vemos a verificação se há um estado saldo anterior, que, se existir, foi 
+feito no método {\it onSaveInstanceState(Bundle)} e é útil quando estamos vendo uma
+frase e rotacionamos o aparelho. Por fim, na região 3, temos a manipulação de outros 
+recursos, como botões e outros elementos de interface.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=15cm]{img/onCreate_anotado}
+    \caption{Método {\it onCreate(Bundle)} da aplicação Froid}
+    \label{onCreate}
+\end{figure}
+
+Quando o mecanismo de seleção do recurso adequado, ou quando é necessário saber as 
+configurações do aparelho, pode-se utilizar o método {\it getResources()} e carregar 
+o recurso adequado de acordo com algum critério. No caso da Figura \ref{multiple_screens},
+um determinado layout é selecionado quando a menor dimensão do aparelho é maior que 600.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=10cm]{img/multiple_screens}
+    \caption{Carregando um recurso de acordo com uma configuração do aparelho}
+    \label{multiple_screens}
+\end{figure}
 
 
 % ..............................................................................
 \subsection{Compartilhamento de informações}
 
-Texto + imagens dos slides 25
+Um recurso bastante útil no Android é a fácil integração entre aplicações através 
+do {\it Content Providers}.
+Isso permite que aplicações como o Froid possam enviar mensagens para redes sociais,
+por exemplo, sem escrever o cliente para tais redes. A Figura \ref{share} mostra 
+como o Froid cria uma mensagem e a envia para o sistema. Os aplicações que podem 
+responder a essa mensagem serão listados, incluindo aí clientes de Facebook, Twitter e aplicativo de SMS, e o usuário deverá escolher qual delas 
+deseja usar.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=10cm]{img/share}
+    \caption{Código do Froid responsável pelo compartilhamento de frases}
+    \label{share}
+\end{figure}
+
+% ..............................................................................
+\subsection{Android NDK}
+
+A arquitetura do Android foi desenvolvida de forma a permitir que os aplicações de  desenvolvedores, por intermédio do Application Framework, não se preocupem com os 
+hardwares específico dos dispositivos. As especificidades de cada hardware ficará a cargo 
+do componentes da Libraries.No entanto, em alguns casos poderá ser necessário desenvolvimento em código nativo. Para tal, é disponibilizado o Android NDK. 
+
+O Android NDK é um conjunto de ferramentas que permite embarcar componentes de código 
+nativo nas aplicações Android. Esses componentes poderão ser escritos em C e C++.
+A última versão do NDK suporta esses conjuntos de instruções ARM:
+
+\begin{itemize}
+    \item ARMv5TE (incluindo instruções Thumb-1)
+    \item ARMv7 (incluindo Thumb-2 e instruções VFPv3-D16)
+    \item instruções x86
+\end{itemize}
+
+O NDK fornece cabeçalhos para libc (a biblioteca C), libm, (a biblioteca Math), 
+OpenGL ES, a interface JNI, entre outras bibliotecas.
 
