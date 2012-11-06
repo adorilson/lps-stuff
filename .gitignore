@@ -8,3 +8,7 @@
 *.snm
 *.toc
 *.DS_Store
+*.gout*
+*.bbl
+*.blg
+*.lof
