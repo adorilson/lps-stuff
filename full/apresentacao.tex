@@ -1,0 +1,431 @@
+% ------------------------------------------------------------------------------
+% Palestra: Identificação e gerenciamento de variabilidades de plataforma em aplicações 
+% para Android
+% Autores:
+%     Adorilson Bezerra <adorilson@ppgsc.ufrn.br>
+% Licença Creative Commons Atribuição 3.0. 
+% Você pode usar e alterar este documento, 
+% mas deve obrigatoriamente citar a autoria. 
+% ------------------------------------------------------------------------------
+
+\documentclass{beamer}
+
+% ------------------------------------------------------------------------------
+\usepackage[latin1]{inputenc}
+\usepackage[brazil]{babel}
+\usepackage{graphicx}
+\usepackage{beamerthemesplit}
+\usepackage{ae}
+\usepackage{alltt}
+\usepackage{pslatex}
+% ------------------------------------------------------------------------------
+
+\usecolortheme{beaver}
+%\usetheme{default}
+%\useinnertheme{rounded}
+%\usecolortheme{seagull}
+%\usecolortheme{crane}
+%\usecolortheme{dove}
+%\usecolortheme{beetle}
+%\useoutertheme{tree}
+
+% ------------------------------------------------------------------------------
+\title[Identificação e gerenciamento de variabilidades de plataforma em aplicações 
+para Android]
+{
+    Identificação e gerenciamento de variabilidades de plataforma em aplicações 
+para Android
+}
+\subtitle{}
+\author[Adorilson Bezerra]
+{
+    Adorilson Bezerra
+}
+\institute{Universidade Federal do Rio Grande do Norte\\Departamento de Informática e Matemática Aplicada}
+\date{\today}
+\logo{\includegraphics[scale=0.2]{img/android}}
+% ------------------------------------------------------------------------------
+
+\begin{document}
+
+% ------------------------------------------------------------------------------
+\frame{\titlepage}
+% ------------------------------------------------------------------------------
+
+\section{Introdução}
+    \subsection{Motivação}
+    \frame
+    {
+        \frametitle{Diversidade de aparelhos}
+        \begin{columns}
+			\column{0.5\textwidth}
+			\begin{figure}[t]
+				\includegraphics[scale=0.35]{img/device_with_android}
+			\end{figure}
+			\column{0.5\textwidth}
+			\begin{figure}[t]
+				\includegraphics[scale=0.35]{img/tablet_with_android}
+			\end{figure}
+		\end{columns}
+    }
+    \frame
+    {
+        \frametitle{Liderança no mercado mundial de celulares}
+			\begin{figure}[t]
+				\includegraphics[scale=0.35]{img/market_share}
+				% Fonte: http://www.idc.com/getdoc.jsp?containerId=prUS23771812
+			\end{figure}
+    }
+    \frame
+    {
+		\frametitle{Problema}
+		\begin{itemize}
+			\item Diferentes características dos dispositivos
+			\item Diferente disponibilidade de memória e tamanho máximo da aplicação
+			\item Diferentes perfis (MIDP 1.0 e MIDP 2.0);
+			\item Diferentes implementações de um mesmo perfil em J2ME (diferente JSRs);
+			\item APIs proprietárias e pacotes opcionais;
+			\item Bugs específicos
+			\item Línguas internacionais
+		\end{itemize}		
+    }
+
+\section{Desenvolvimento}
+    \subsection{Trabalhos relacionados}
+    \frame
+    {	
+		\frametitle{Aplicativos móveis (J2ME)}
+		\begin{itemize}
+			\item Vander Alves, Ivan Cardim, Heitor Vital, Pedro H. M. Sampaio, Alexandre L. G. Damasceno, 
+			Paulo Borba, Geber Ramalho: {\it Comparative Analysis of Porting Strategies in J2ME Games}. ICSM 2005: 123-132
+			\item Pedro H. M. Sampaio, Alexandre L. G. Damasceno, Igor Sampaio, Vander Alves, Geber Ramalho, Paulo Borba: {\it Portando Jogos em J2ME: Desafios, Estudo de Caso, e Diretrizes. } SCENTIA 2004 vol. 15
+		\end{itemize}		
+    }
+    \frame
+    {
+		\frametitle{Comparative Analysis of Porting Strategies in J2ME Games}
+		\begin{itemize}
+			\item Estratégias
+			\begin{itemize}
+				\item Incremental Approach: the Zaak Case
+					\begin{itemize}
+						\item Nokia S60 -> Nokia S40
+						\item Redução do tamanho: 186K -> 63K
+						\item Carregamento de imagens
+					\end{itemize}
+				\item Program Transformation: The Rain of Fire
+					\begin{itemize}
+						\item Nokia S40, Nokia S60 e Motorola T720 (ad hoc)
+						\item Java Transformation System (JaTS)
+					\end{itemize}
+				\item Preprocessing: The My Big Brother Case
+					\begin{itemize}
+						\item 8 versões para 50 aparelhos
+						\item Compilação condicional
+					\end{itemize}
+			\end{itemize}
+		\end{itemize}
+    }
+    \frame
+    {
+		\frametitle{Comparative Analysis of Porting Strategies in J2ME Games}
+		\begin{itemize}
+			\item Avaliação
+				\begin{figure}[t]
+					\includegraphics[scale=0.5]{img/comparison_porting_mechanisms}
+				\end{figure}
+		\end{itemize}
+    }
+    \frame
+    {
+		\frametitle{Comparative Analysis of Porting Strategies in J2ME Games}
+		\begin{itemize}
+			\item Lições aprendidas e boas práticas
+			\begin{itemize}
+				\item Iniciar o desenvolvimento pelos dispositivos com maiores restrições
+				\item É possível combinar as estratégias
+				\item Separar os interesses (código de lógico e código para elementos gráficos, 
+				por exemplo)
+				\item Testar o software nos aparelhos reais
+				\item Manter uma base de bugs conhecidos
+			\end{itemize}
+		\end{itemize}
+    }
+    \frame
+    {
+		\frametitle{Portando Jogos em J2ME: Desafios, Estudo de Caso, e Diretrizes}
+		\begin{itemize}
+			\item Aprofundamento do estudo de caso "Zaak" do artigo anterior
+			\item Categoriza as soluções atuais:
+				\begin{itemize}
+					\item Ferramentas de pré-processamento (Antenna e J2ME Polish)
+					\item Diretrizes específicas (Motorola Port Guide)
+					\item Diretrizes amplas
+					\item Ferramentas semi-automáticas (Tira Jump)
+					\item Abordagens Formais (restrito a GUI)
+				\end{itemize}
+		\end{itemize}
+    }
+    \frame
+    {
+		\frametitle{Portando Jogos em J2ME: Desafios, Estudo de Caso, e Diretrizes}
+		\begin{itemize}
+			\item Efeitos no porte do código-fonte
+			\begin{figure}[t]
+					\includegraphics[scale=0.5]{img/efeitos_no_porte_codigo_fonte}
+				\end{figure}
+		\end{itemize}
+    }
+    \frame
+    {
+		\frametitle{Portando Jogos em J2ME: Desafios, Estudo de Caso, e Diretrizes}
+		\begin{itemize}
+			\item Síntese das atividades do estudo de caso
+			\begin{figure}[t]
+					\includegraphics[scale=0.35]{img/sintese_atividades}
+			\end{figure}
+		\end{itemize}
+    }
+    \frame
+    {
+		\frametitle{Sobre Android}
+		\begin{itemize}
+			\item Benjamin Speckmann: {\it The Android mobile platform}. Eastern Michigan 
+			University. 2008.
+			\item Jan Bosch: {\it From Software Product Lines to Software Ecosystems}. SPLC 2009.
+		\end{itemize}		
+    }
+    \frame
+    {
+		\frametitle{The Android mobile platform}
+		\begin{itemize}
+			\item Android vs Symbian vs Windows Mobile
+			\begin{figure}[t]
+				\includegraphics[scale=0.35]{img/android_symbian_windows}
+			\end{figure}
+		\end{itemize}
+    }
+    \frame
+    {
+		\frametitle{The Android mobile platform}
+		\begin{itemize}
+			\item Desenvolvimento para Android vs Desenvolvimento para Symbian OS
+				\begin{figure}[t]
+					\includegraphics[scale=0.3]{img/emulators}
+				\end{figure}
+				\begin{itemize}
+					\item Vantagens: todas
+					\item Desvantagens: nenhuma de ordem técnica
+				\end{itemize}
+		\end{itemize}
+    }
+    \frame
+    {
+		\frametitle{From Software Product Lines to Software Ecosystems}
+		
+			\begin{itemize}
+				\item Um ecossistema de software é um conjunto de soluções de software que possibilitam, suportam e automatizam atividades e transações...
+				\begin{figure}[t]
+					\includegraphics[scale=0.4]{img/EcoSystems}
+				\end{figure}
+			\end{itemize}
+		
+    }
+    \frame
+    {
+		\frametitle{From Software Product Lines to Software Ecosystems}
+		\begin{itemize}
+			\item Sistemas operacionais
+			\begin{flushleft}
+			\begin{description}
+				\item [Característica:] fornecedores de S.O.'s disponibilizam ferramentas de desenvolvimento visando a adotação do ecossistema por desenvolvedores de aplicações
+				\item [Fator de sucesso:] minimização do esforço dos desenvolvedores para a criação de aplicações
+				\item [Desafio:] rápida evolução dos dispositivos
+			\end{description}
+			\end{flushleft}
+		\end{itemize}
+    }
+    
+    \subsection{Plataforma Android}
+    \frame
+    {
+        \frametitle{O que é o Android}
+        \begin{quote}
+            Android é um conjunto de softwares para dispositivos móveis, incluindo sistema operacional, middleware e aplicações chaves/básicas.
+            O Android SDK provê as ferramentas e API's necessárias para  desenvolvimento de 
+            aplicações utilizando a linguagem de programação Java.
+        \end{quote}
+    }
+    \frame
+    {
+		\frametitle{Características - independentes do aparelho}
+		\begin{itemize}
+			\item Framework de aplicações possibilitando reuso e troca de componentes)
+			\item Maquina virtual Dalvik
+			\item Navegador web integrado (usando o motor WebKit)
+			\item SQLite para armazenamento local de dados
+			\item Suporte para midias comuns de audio, video e formatos de imagens
+			(MPEG4, H.264, MP3, AAC, AMR, JPG, PNG, GIF)
+			\item Ambiente de desenvolvimento inclue um emulador de dispositivo, ferramentas para 
+			depuração, analise dinâmica de memória e performance, e um plugin para o Eclipse IDE.
+		\end{itemize}
+	}
+	\frame
+	{
+		\frametitle{Características - dependentes do aparelho}
+		\begin{itemize}
+			\item Otimizações gráficas graças a biblioteca 2D customizada; gráficos 3D baseados em 
+			Open GL ES 1.0 (aceleração por hardware opcional)
+			\item Telefonia GSM
+			\item Bluetooth, EDGE, 3G, e WiFi
+			\item Câmera, GPS, bússola, e acelerômetro
+		\end{itemize}
+    }
+    \frame
+    {
+		\frametitle{Arquitetura}
+		\begin{figure}[t]
+            \includegraphics[scale=0.3]{img/system-architecture}
+        \end{figure}
+    }
+    \frame
+    {
+		\frametitle{Arquitetura}
+		\begin{flushleft}
+		\begin{description}
+            \item [Aplicações:] o Android é distribuído com diversas aplicações
+            \item [Framework de aplicações:] componentes para serem utilizadas no 
+            desenvolvimento de aplicações 
+            \item [Bibliotecas:] conjunto de bibliotecas em C/C++ usadas por várias componentes do 
+            sistema
+            \item [Runtime:] bibliotecas básica do Java
+            \item [Kernel Linux:] versão 2.6
+        \end{description}
+        \end{flushleft}
+    }
+    \frame
+    {
+		\frametitle{Estrutura padrão de diretórios}
+		\begin{figure}[t]
+            \includegraphics[scale=0.5]{img/estrutura}
+        \end{figure}
+    }
+    \subsection{Variabilidades em aplicações para Android}
+    \frame
+    {
+        \frametitle{Dispositivos com ou sem sensores}
+        \begin{itemize} 
+            \item Acelerômetro
+            \item Câmera
+            \item Luminosidade
+            \item Bluetooth
+            \item ...
+        \end{itemize} 
+    }
+    \frame
+    {
+        \frametitle{Se tem acelerômetro...}
+         \begin{figure}[t]
+            \includegraphics[scale=0.25]{img/if_accelSuppported}
+            \caption{Testando se o dispositivo tem acelerômetro}
+        \end{figure}
+    }
+    \frame
+    {
+        \frametitle{Gráficos: 2D ou 3D}
+        \begin{figure}[t]
+            \includegraphics[scale=0.4]{img/if_3dSupported}
+            \caption{Testando se o dispositivo tem suporte para gráficos 3d}
+        \end{figure} 
+    }
+    \frame
+    {
+        \frametitle{Tamanhos e densidade das telas}
+		\begin{figure}[t]
+            \includegraphics[scale=0.4]{img/ScreenSizes}
+        \end{figure} 
+    }
+    \frame
+    {
+		\frametitle{Mecanismo de interação}
+		\begin{itemize}
+			\item Teclado físico
+			\item Trackball
+			\item Botões de navegação (five-way navigation pad)
+		\end{itemize}
+		\begin{description}
+			\item Raro esse tipo de restrição
+		\end{description}
+    }
+    \frame
+    {
+        \frametitle{Versão da API}
+        \begin{figure}[t]
+            \includegraphics[scale=0.4]{img/PlatformVersions}
+        \end{figure}
+    }
+    \frame
+    {
+		\frametitle{Pacote de compatibilidade}
+		\begin{itemize}
+			\item Suporte estático para API's mais recentes
+			\item A partir da API nível 4
+			\item Facilita o desenvolvimento na medida em que permite o desenvolver
+			se preocupar menos com a versão da API
+		\end{itemize}
+    }
+    \frame
+    {
+		\frametitle{Versão do OpenGL ES}
+        \begin{figure}[t]
+            \includegraphics[scale=0.4]{img/OpenGL}
+        \end{figure}
+    }
+    \frame
+    {
+		\frametitle{Android NDK}
+        \begin{itemize}
+            \item Suporte para desenvolvimento em código nativo
+            \begin{itemize}
+                \item ARMv5TE (incluindo instruções Thumb-1)
+				\item ARMv7-A (incluindo instruções Thumb-2 e VFPv3-D16, com suporteopcional para NEON/VFPv3-D32)
+				\item x86
+            \end{itemize}
+            \item Aumenta a complexidade sem necessariamente aumentar a performance
+        \end{itemize}
+    }
+    \frame
+    {
+		\frametitle{AndroidManifest.xml}
+		\begin{itemize}
+			\item "Promete" mas não cumpre
+			\item As restrições são válidas apenas para filtragem no Android Market
+		\end{itemize}
+    }
+    
+\section{Conclusão}
+	\subsection{Dificuldades}
+	\frame
+	{
+		\frametitle{Dificuldades}
+		\begin{itemize}
+			\item Inexperiência com a plataforma
+			\item Ausência de trabalhos na área de LPS relacionados à plataforma
+		\end{itemize}
+    }
+    \subsection{Trabalhos futuros}
+    \frame
+    {
+		\frametitle{Trabalhos futuros}
+		\begin{itemize}
+			\item Aprofundar a pesquisa
+		\end{itemize}
+    }
+    \frame
+    {
+		\frametitle{Perguntas ?}
+		\begin{quote}
+			Cuidado como você usa o Android. Ele sabe quando o usuário é um macaco: http://is.gd/nDcoFc
+		\end{quote}
+	}
+\end{document}
