@@ -313,6 +313,22 @@ para Android
     \subsection{Variabilidades em aplicações para Android}
     \frame
     {
+        \frametitle{Variabilidades em aplicações para Android}
+        \begin{itemize}
+            \item Versão da API
+            
+            \item Dispositivos com ou sem sensores
+            \item Gráficos 2D ou 3D
+            \item Mecanismo de interação
+            \item Pacote de compatibilidade
+            \item Versão da OpenGL ES
+            \item Android NDK
+            \item Tamanhos e densidade das telas
+            \item Línguas internacionais
+        \end{itemize}
+    }
+    \frame
+    {
         \frametitle{Dispositivos com ou sem sensores}
         \begin{itemize} 
             \item Acelerômetro
@@ -324,24 +340,8 @@ para Android
     }
     \frame
     {
-        \frametitle{Se tem acelerômetro...}
-         \begin{figure}[t]
-            \includegraphics[scale=0.25]{img/if_accelSuppported}
-            \caption{Testando se o dispositivo tem acelerômetro}
-        \end{figure}
-    }
-    \frame
-    {
-        \frametitle{Gráficos: 2D ou 3D}
-        \begin{figure}[t]
-            \includegraphics[scale=0.4]{img/if_3dSupported}
-            \caption{Testando se o dispositivo tem suporte para gráficos 3d}
-        \end{figure} 
-    }
-    \frame
-    {
         \frametitle{Tamanhos e densidade das telas}
-		\begin{figure}[t]
+        \begin{figure}[t]
             \includegraphics[scale=0.4]{img/ScreenSizes}
         \end{figure} 
     }
@@ -366,33 +366,140 @@ para Android
     }
     \frame
     {
-		\frametitle{Pacote de compatibilidade}
-		\begin{itemize}
-			\item Suporte estático para API's mais recentes
-			\item A partir da API nível 4
-			\item Facilita o desenvolvimento na medida em que permite o desenvolver
-			se preocupar menos com a versão da API
-		\end{itemize}
+        \frametitle{Pacote de compatibilidade}
+        \begin{itemize}
+            \item Suporte estático para API's mais recentes
+            \item A partir da API nível 4
+            \item Facilita o desenvolvimento na medida em que permite o desenvolver
+            se preocupar menos com a versão da API
+        \end{itemize}
     }
     \frame
     {
-		\frametitle{Versão do OpenGL ES}
+        \frametitle{Versão do OpenGL ES}
         \begin{figure}[t]
             \includegraphics[scale=0.4]{img/OpenGL}
         \end{figure}
     }
     \frame
     {
-		\frametitle{Android NDK}
+        \frametitle{Android NDK}
         \begin{itemize}
             \item Suporte para desenvolvimento em código nativo
             \begin{itemize}
                 \item ARMv5TE (incluindo instruções Thumb-1)
-				\item ARMv7-A (incluindo instruções Thumb-2 e VFPv3-D16, com suporteopcional para NEON/VFPv3-D32)
-				\item x86
+                \item ARMv7-A (incluindo instruções Thumb-2 e VFPv3-D16, com suporteopcional para NEON/VFPv3-D32)
+                \item x86
             \end{itemize}
             \item Aumenta a complexidade sem necessariamente aumentar a performance
         \end{itemize}
+    }
+    \subsection{Controle das variabilidades em aplicações para Android}
+    \frame
+    {
+        \frametitle{Versão da API}
+        \begin{itemize}
+            \item Reflexão
+        \end{itemize}
+        \begin{figure}[t]
+            \includegraphics[scale=0.5]{img/reflect1.png}
+        \end{figure}
+    }
+    \frame
+    {
+        \frametitle{Versão da API}
+        \begin{figure}[t]
+            \includegraphics[scale=0.5]{img/reflect2.png}
+        \end{figure}
+    }
+    \frame
+    {
+        \frametitle{Versão da API}
+        \begin{itemize}
+            \item Classe wrapper
+        \end{itemize}
+        \begin{figure}[t]
+            \includegraphics[scale=0.5]{img/wrapper1.png}
+        \end{figure}
+    }
+    \frame
+    {
+        \frametitle{Versão da API}
+        \begin{figure}[t]
+            \includegraphics[scale=0.5]{img/wrapper2.png}
+        \end{figure}
+    }
+    \frame
+    {
+        \frametitle{Versão da API}
+        \begin{figure}[t]
+            \includegraphics[scale=0.5]{img/wrapper3.png}
+        \end{figure}
+    }
+    \frame
+    {
+        \frametitle{Versão da API}
+        \begin{itemize}
+            \item Checando versão exata em tempo de execução
+        \end{itemize}
+        \begin{figure}[t]
+            \includegraphics[scale=0.5]{img/versao.png}
+        \end{figure}
+    }
+    \frame
+    {
+        \frametitle{Mesmo(s) mecanismo(s) anterior(es)}
+        \begin{itemize}
+            \item Dispositivos com ou sem sensores
+            \item Gráficos 2D ou 3D
+            \item Mecanismo de interação
+            \item Pacote de compatibilidade
+            \item Versão da OpenGL ES
+            \item Android NDK
+        \end{itemize}
+        \begin{quote}
+            A API fornece o método PackageManager.hasSystemFeature()
+        \end{quote}
+    }
+    \frame
+    {
+        \frametitle{Se tem acelerômetro...}
+         \begin{figure}[t]
+            \includegraphics[scale=0.25]{img/if_accelSuppported}
+            \caption{Testando se o dispositivo tem acelerômetro}
+        \end{figure}
+    }
+    \frame
+    {
+        \frametitle{São transparentes para o desenvolvedor}
+        \begin{itemize}
+            \item Tamanhos e densidade das telas*
+            \item Línguas internacionais 
+        \end{itemize}
+        \begin{figure}[t]
+            \includegraphics[scale=0.5]{img/estrutura.png}
+        \end{figure}
+    }
+    \frame
+    {
+        \frametitle{Fragmentos}
+        \begin{figure}[t]
+            \includegraphics[scale=0.5]{img/fragments.png}
+        \end{figure}
+    }
+    \frame
+    {
+        \frametitle{Fragmentos - Exemplo}
+        \begin{figure}[t]
+            \includegraphics[scale=0.5]{img/tablet_horizontal_antes_e_depois.png}
+        \end{figure}
+    }
+    \frame
+    {
+        \frametitle{Fragmentos - Exemplo}
+        \begin{figure}[t]
+            \includegraphics[scale=0.5]{img/tablet_vertical_antes_e_depois.png}
+        \end{figure}
     }
     \frame
     {
@@ -402,23 +509,17 @@ para Android
 			\item As restrições são válidas apenas para filtragem no Android Market
 		\end{itemize}
     }
-    
 \section{Conclusão}
-	\subsection{Dificuldades}
+	\subsection{Conclusão}
 	\frame
 	{
-		\frametitle{Dificuldades}
+		\frametitle{Conclusão}
 		\begin{itemize}
-			\item Inexperiência com a plataforma
+			\item Bom suporte para variabilidades de plataforma
 			\item Ausência de trabalhos na área de LPS relacionados à plataforma
-		\end{itemize}
-    }
-    \subsection{Trabalhos futuros}
-    \frame
-    {
-		\frametitle{Trabalhos futuros}
-		\begin{itemize}
-			\item Aprofundar a pesquisa
+            \begin{quote}
+            Como tratar variabilidades das regras de negócios em uma LPS?
+            \end{quote}
 		\end{itemize}
     }
     \frame
@@ -428,4 +529,17 @@ para Android
 			Cuidado como você usa o Android. Ele sabe quando o usuário é um macaco: http://is.gd/nDcoFc
 		\end{quote}
 	}
+    \subsection{Refências}
+   \frame
+    {
+        \frametitle{Referências}
+        \begin{itemize}
+            \item http://developer.android.com/
+            \item http://android-developers.blogspot.com/2009/04/backward-compatibility-for-android.html
+            \item http://android-developers.blogspot.com/2010/07/how-to-have-your-cupcake-and-eat-it-too.html
+            \item http://android-developers.blogspot.com/2010/06/making-sense-of-multitouch.html
+            \item http://blog.caelum.com.br/layouts-mais-simples-com-android-fragments/
+        \end{itemize}
+    }
+\end{document}
 \end{document}
