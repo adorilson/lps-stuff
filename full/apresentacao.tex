@@ -87,165 +87,10 @@ para Android
 			\item APIs proprietárias e pacotes opcionais;
 			\item Bugs específicos
 			\item Línguas internacionais
-		\end{itemize}		
+		\end{itemize}
     }
 
 \section{Desenvolvimento}
-    \subsection{Trabalhos relacionados}
-    \frame
-    {	
-		\frametitle{Aplicativos móveis (J2ME)}
-		\begin{itemize}
-			\item Vander Alves, Ivan Cardim, Heitor Vital, Pedro H. M. Sampaio, Alexandre L. G. Damasceno, 
-			Paulo Borba, Geber Ramalho: {\it Comparative Analysis of Porting Strategies in J2ME Games}. ICSM 2005: 123-132
-			\item Pedro H. M. Sampaio, Alexandre L. G. Damasceno, Igor Sampaio, Vander Alves, Geber Ramalho, Paulo Borba: {\it Portando Jogos em J2ME: Desafios, Estudo de Caso, e Diretrizes. } SCENTIA 2004 vol. 15
-		\end{itemize}		
-    }
-    \frame
-    {
-		\frametitle{Comparative Analysis of Porting Strategies in J2ME Games}
-		\begin{itemize}
-			\item Estratégias
-			\begin{itemize}
-				\item Incremental Approach: the Zaak Case
-					\begin{itemize}
-						\item Nokia S60 -> Nokia S40
-						\item Redução do tamanho: 186K -> 63K
-						\item Carregamento de imagens
-					\end{itemize}
-				\item Program Transformation: The Rain of Fire
-					\begin{itemize}
-						\item Nokia S40, Nokia S60 e Motorola T720 (ad hoc)
-						\item Java Transformation System (JaTS)
-					\end{itemize}
-				\item Preprocessing: The My Big Brother Case
-					\begin{itemize}
-						\item 8 versões para 50 aparelhos
-						\item Compilação condicional
-					\end{itemize}
-			\end{itemize}
-		\end{itemize}
-    }
-    \frame
-    {
-		\frametitle{Comparative Analysis of Porting Strategies in J2ME Games}
-		\begin{itemize}
-			\item Avaliação
-				\begin{figure}[t]
-					\includegraphics[scale=0.5]{img/comparison_porting_mechanisms}
-				\end{figure}
-		\end{itemize}
-    }
-    \frame
-    {
-		\frametitle{Comparative Analysis of Porting Strategies in J2ME Games}
-		\begin{itemize}
-			\item Lições aprendidas e boas práticas
-			\begin{itemize}
-				\item Iniciar o desenvolvimento pelos dispositivos com maiores restrições
-				\item É possível combinar as estratégias
-				\item Separar os interesses (código de lógico e código para elementos gráficos, 
-				por exemplo)
-				\item Testar o software nos aparelhos reais
-				\item Manter uma base de bugs conhecidos
-			\end{itemize}
-		\end{itemize}
-    }
-    \frame
-    {
-		\frametitle{Portando Jogos em J2ME: Desafios, Estudo de Caso, e Diretrizes}
-		\begin{itemize}
-			\item Aprofundamento do estudo de caso "Zaak" do artigo anterior
-			\item Categoriza as soluções atuais:
-				\begin{itemize}
-					\item Ferramentas de pré-processamento (Antenna e J2ME Polish)
-					\item Diretrizes específicas (Motorola Port Guide)
-					\item Diretrizes amplas
-					\item Ferramentas semi-automáticas (Tira Jump)
-					\item Abordagens Formais (restrito a GUI)
-				\end{itemize}
-		\end{itemize}
-    }
-    \frame
-    {
-		\frametitle{Portando Jogos em J2ME: Desafios, Estudo de Caso, e Diretrizes}
-		\begin{itemize}
-			\item Efeitos no porte do código-fonte
-			\begin{figure}[t]
-					\includegraphics[scale=0.5]{img/efeitos_no_porte_codigo_fonte}
-				\end{figure}
-		\end{itemize}
-    }
-    \frame
-    {
-		\frametitle{Portando Jogos em J2ME: Desafios, Estudo de Caso, e Diretrizes}
-		\begin{itemize}
-			\item Síntese das atividades do estudo de caso
-			\begin{figure}[t]
-					\includegraphics[scale=0.35]{img/sintese_atividades}
-			\end{figure}
-		\end{itemize}
-    }
-    \frame
-    {
-		\frametitle{Sobre Android}
-		\begin{itemize}
-			\item Benjamin Speckmann: {\it The Android mobile platform}. Eastern Michigan 
-			University. 2008.
-			\item Jan Bosch: {\it From Software Product Lines to Software Ecosystems}. SPLC 2009.
-		\end{itemize}		
-    }
-    \frame
-    {
-		\frametitle{The Android mobile platform}
-		\begin{itemize}
-			\item Android vs Symbian vs Windows Mobile
-			\begin{figure}[t]
-				\includegraphics[scale=0.35]{img/android_symbian_windows}
-			\end{figure}
-		\end{itemize}
-    }
-    \frame
-    {
-		\frametitle{The Android mobile platform}
-		\begin{itemize}
-			\item Desenvolvimento para Android vs Desenvolvimento para Symbian OS
-				\begin{figure}[t]
-					\includegraphics[scale=0.3]{img/emulators}
-				\end{figure}
-				\begin{itemize}
-					\item Vantagens: todas
-					\item Desvantagens: nenhuma de ordem técnica
-				\end{itemize}
-		\end{itemize}
-    }
-    \frame
-    {
-		\frametitle{From Software Product Lines to Software Ecosystems}
-		
-			\begin{itemize}
-				\item Um ecossistema de software é um conjunto de soluções de software que possibilitam, suportam e automatizam atividades e transações...
-				\begin{figure}[t]
-					\includegraphics[scale=0.4]{img/EcoSystems}
-				\end{figure}
-			\end{itemize}
-		
-    }
-    \frame
-    {
-		\frametitle{From Software Product Lines to Software Ecosystems}
-		\begin{itemize}
-			\item Sistemas operacionais
-			\begin{flushleft}
-			\begin{description}
-				\item [Característica:] fornecedores de S.O.'s disponibilizam ferramentas de desenvolvimento visando a adotação do ecossistema por desenvolvedores de aplicações
-				\item [Fator de sucesso:] minimização do esforço dos desenvolvedores para a criação de aplicações
-				\item [Desafio:] rápida evolução dos dispositivos
-			\end{description}
-			\end{flushleft}
-		\end{itemize}
-    }
-    
     \subsection{Plataforma Android}
     \frame
     {
@@ -521,6 +366,18 @@ para Android
             Como tratar variabilidades das regras de negócios em uma LPS?
             \end{quote}
 		\end{itemize}
+    }
+    \subsection{Trabalhos relacionados}
+    \frame
+    {
+        \frametitle{Trabalhos relacionados}
+        \begin{itemize}
+            \item Vander Alves, Ivan Cardim, Heitor Vital, Pedro H. M. Sampaio, Alexandre L. G. Damasceno, 
+            Paulo Borba, Geber Ramalho: {\it Comparative Analysis of Porting Strategies in J2ME Games}. ICSM 2005: 123-132
+            \item Pedro H. M. Sampaio, Alexandre L. G. Damasceno, Igor Sampaio, Vander Alves, Geber Ramalho, Paulo Borba: {\it Portando Jogos em J2ME: Desafios, Estudo de Caso, e Diretrizes. } SCENTIA 2004 vol. 15
+            \item Benjamin Speckmann: {\it The Android mobile platform}. Eastern Michigan University. 2008.
+            \item Jan Bosch: {\it From Software Product Lines to Software Ecosystems}
+        \end{itemize}
     }
     \frame
     {
