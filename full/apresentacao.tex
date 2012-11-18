@@ -88,6 +88,7 @@ para Android
 			\item Bugs específicos
 			\item Línguas internacionais
 		\end{itemize}
+		Fonte: Pedro H. M. Sampaio, Alexandre L. G. Damasceno, Igor Sampaio, Vander Alves, Geber Ramalho, Paulo Borba: {\it Portando Jogos em J2ME: Desafios, Estudo de Caso, e Diretrizes. } SCENTIA 2004 vol. 15
     }
     \frame
     {
@@ -167,48 +168,24 @@ para Android
     \frame
     {
         \frametitle{Variabilidades em aplicações para Android}
-        \begin{itemize}
-            \item Versão da API
-            
-            \item Dispositivos com ou sem sensores
-            \item Gráficos 2D ou 3D
-            \item Mecanismo de interação
-            \item Pacote de compatibilidade
-            \item Versão da OpenGL ES
-            \item Android NDK
-            \item Tamanhos e densidade das telas
-            \item Línguas internacionais
-        \end{itemize}
-    }
-    \frame
-    {
-        \frametitle{Dispositivos com ou sem sensores}
-        \begin{itemize} 
-            \item Acelerômetro
-            \item Câmera
-            \item Luminosidade
-            \item Bluetooth
-            \item ...
-        \end{itemize} 
-    }
-    \frame
-    {
-        \frametitle{Tamanhos e densidade das telas}
-        \begin{figure}[t]
-            \includegraphics[scale=0.4]{img/ScreenSizes}
-        \end{figure} 
-    }
-    \frame
-    {
-		\frametitle{Mecanismo de interação}
-		\begin{itemize}
-			\item Teclado físico
-			\item Trackball
-			\item Botões de navegação (five-way navigation pad)
-		\end{itemize}
-		\begin{description}
-			\item Raro esse tipo de restrição
-		\end{description}
+        \begin{columns}
+			\column{0.5\textwidth}
+			Versão do Android
+			\begin{itemize}
+				\item Versão da API
+				\item Gráficos 2D ou 3D
+                \item Versão da OpenGL ES
+			\end{itemize}
+			\column{0.5\textwidth}
+			Dispositivos
+			\begin{itemize}
+				\item Ausencia ou presença de sensores
+				\item Gráficos 2D ou 3D
+				\item Mecanismo de interação
+				\item Tamanhos e densidade das telas
+				\item Línguas internacionais
+			\end{itemize}
+		\end{columns}
     }
     \frame
     {
@@ -217,9 +194,11 @@ para Android
             \includegraphics[scale=0.4]{img/PlatformVersions}
         \end{figure}
     }
+    \subsection{Controle das variabilidades em aplicações para Android}
     \frame
     {
-        \frametitle{Pacote de compatibilidade}
+        \frametitle{Versão da API}
+        Pacote de compatibilidade
         \begin{itemize}
             \item Suporte estático para API's mais recentes
             \item A partir da API nível 4
@@ -229,33 +208,12 @@ para Android
     }
     \frame
     {
-        \frametitle{Versão do OpenGL ES}
-        \begin{figure}[t]
-            \includegraphics[scale=0.4]{img/OpenGL}
-        \end{figure}
-    }
-    \frame
-    {
-        \frametitle{Android NDK}
-        \begin{itemize}
-            \item Suporte para desenvolvimento em código nativo
-            \begin{itemize}
-                \item ARMv5TE (incluindo instruções Thumb-1)
-                \item ARMv7-A (incluindo instruções Thumb-2 e VFPv3-D16, com suporteopcional para NEON/VFPv3-D32)
-                \item x86
-            \end{itemize}
-            \item Aumenta a complexidade sem necessariamente aumentar a performance
-        \end{itemize}
-    }
-    \subsection{Controle das variabilidades em aplicações para Android}
-    \frame
-    {
         \frametitle{Versão da API}
         \begin{itemize}
             \item Reflexão
         \end{itemize}
         \begin{figure}[t]
-            \includegraphics[scale=0.5]{img/reflect1.png}
+            \includegraphics[scale=0.4]{img/reflect1.png}
         \end{figure}
     }
     \frame
@@ -316,17 +274,25 @@ para Android
     }
     \frame
     {
-        \frametitle{Se tem acelerômetro...}
+        \frametitle{Testando suporte para multi-toque}
          \begin{figure}[t]
-            \includegraphics[scale=0.25]{img/if_accelSuppported}
-            \caption{Testando se o dispositivo tem acelerômetro}
+            \includegraphics[scale=0.35]{img/if_multitouch}
+            \caption{Testando se o dispositivo tem suporte para multi-toque}
+        \end{figure}
+    }
+    \frame
+    {
+        \frametitle{Testando suporte para multi-toque}
+         \begin{figure}[t]
+            \includegraphics[scale=0.5]{img/if_eclair}
+            \caption{Criando classe de acordo com a versão da API}
         \end{figure}
     }
     \frame
     {
         \frametitle{São transparentes para o desenvolvedor}
         \begin{itemize}
-            \item Tamanhos e densidade das telas*
+            \item Tamanhos e densidade das telas
             \item Línguas internacionais 
         \end{itemize}
         \begin{figure}[t]
