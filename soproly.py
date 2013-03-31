@@ -17,9 +17,6 @@ from lxml import etree
 
 import configspl
 
-confs = {}
-fixed_imports = []
-fixed_package = []
 
 def setup_project(product):
     global confs 
@@ -57,11 +54,6 @@ def add_resfiles(files):
         os.system(mkdir)
         cmd = 'cp res/' + file_ + ' ' + new_dir
         os.system(cmd)
-
-def process_core():
-    # TODO filter core files by features
-    if 'resfiles' in configspl.core:
-        add_resfiles(configspl.core['resfiles'])
 
 def main_activity():
     pass
@@ -127,15 +119,110 @@ def add_feature(feature):
     if 'resfiles' in params:
         add_resfiles(params['resfiles'])
 
+FEATURE_BEGIN = 'FEATURE BEGIN'
+FEATURE_END = 'FEATURE END'
+
+def filter_by_features(features):
+    
+    def filter_xml():
+        path_xml = "../%(product)s/res/layout/main.xml" % confs
+        for path in [path_xml]:
+            print(path)
+            file_ = open(path).readlines()
+            filtered_file = []
+            len_file = len(file_)
+            i = 0
+            while i<len_file:
+                line = file_[i]
+                if not FEATURE_BEGIN in line.strip():
+                    filtered_file.append(line)
+                else:
+                    feature = line[line.find(' ')+1: line.rfind(' ')]
+                    feature = feature[feature.rfind(' ')+1:].strip()
+                    log.info('Feature %s found' % feature)
+                    log.info('FEATURE = ' + feature)
+                    print(features)
+                    while True:
+                        if feature in features:
+                            filtered_file.append(line)
+                            log.info('Feature in product')
+                        else:
+                            log.info('Product without feature')
+                        i = i+1
+                        line = file_[i]
+                        if FEATURE_END in line.strip():
+                            break
+                    if feature in features and FEATURE_END in line.strip():
+                        filtered_file.append(line)
+                i = i + 1
+                
+                
+                o = open(path,"w")
+                o.writelines(filtered_file)
+                o.close()
+
+    def filter_java():
+        path_java = "../%(product)s/src/br/unb/mobileMedia/%(product)s/MMUnBActivity.java" % confs
+        for path in [path_java]:
+            print(path)
+            file_ = open(path).readlines()
+            filtered_file = []
+            len_file = len(file_)
+            i = 0 
+            while i<len_file:
+                line = file_[i]
+                if not FEATURE_BEGIN in line.strip():
+                    filtered_file.append(line)
+                else:
+                    feature = line[line.rfind(' ')+1:].strip()
+                    log.info('Feature %s found' % feature)
+                    log.info('FEATURE = ' + feature)
+                    print(features)
+                    while True:
+                        if feature in features:
+                            filtered_file.append(line)
+                            log.info('Feature in product')
+                        else:
+                            log.info('Product without feature')
+                        i = i+1
+                        line = file_[i]
+                        if FEATURE_END in line.strip():
+                            break
+                    if feature in features and FEATURE_END in line.strip():
+                        filtered_file.append(line)
+                i = i + 1
+                
+                
+                o = open(path,"w")
+                o.writelines(filtered_file)
+                o.close()
+
+
+    log.info('Filter files by features')
+    filter_java()
+    filter_xml()
+    
+
+def process_core():
+    log.info('Processing the core')
+    # TODO filter core files by features
+    if 'resfiles' in configspl.core:
+        add_resfiles(configspl.core['resfiles'])
+    if 'srcfiles' in configspl.core:
+        add_srcfiles(configspl.core['srcfiles'])
+
 def process_features(product):
-    log.info(product)
-    if configspl.ALL in product:
+    log.info('Processing the ' + product + ' product')
+    p = configspl.products[product]
+    if configspl.ALL_FEATURES in p:
         log.info('Adding all features')
         for feature in configspl.features:
-            #playlist = configspl.features[configspl.PLAYLIST]
             add_feature(feature)
-
-
+    else:
+        for feature in p:
+            log.info('Adding the ' + feature)
+            add_feature(feature)
+            filter_by_features(p)
 
 for product in configspl.products:
     global confs
@@ -143,7 +230,9 @@ for product in configspl.products:
     global fixed_package
     confs = {}
     fixed_imports = []
-    fixed_imports = []
+    fixed_package = []
+    
     setup_project(product)
     process_core()
-    process_features(configspl.products[product])
+    
+    process_features(product)
