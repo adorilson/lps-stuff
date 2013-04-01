@@ -134,9 +134,8 @@ FEATURE_END = 'FEATURE END'
 
 def filter_by_features(features):
     
-    def filter_xml():
-        path_xml = "../%(product)s/res/layout/main.xml" % confs
-        for path in [path_xml]:
+    def filter_xml(path_):
+        for path in [path_]:
             print(path)
             file_ = open(path).readlines()
             filtered_file = []
@@ -171,9 +170,8 @@ def filter_by_features(features):
                 o.writelines(filtered_file)
                 o.close()
 
-    def filter_java():
-        path_java = "../%(product)s/src/br/unb/mobileMedia/%(product)s/MMUnBActivity.java" % confs
-        for path in [path_java]:
+    def filter_java(path_):
+        for path in [path_]:
             print(path)
             file_ = open(path).readlines()
             filtered_file = []
@@ -207,11 +205,16 @@ def filter_by_features(features):
                 o.writelines(filtered_file)
                 o.close()
 
-
     log.info('Filter files by features')
-    filter_java()
-    filter_xml()
-    
+    for root, dirs, files in os.walk("../%(product)s/" % confs):
+        for file_ in files:
+            path = root + '/' + file_
+            if file_.endswith('.java'):
+                log.info('Filtering the ' + path + ' java file')
+                filter_java(path)
+            if file_.endswith('.xml'):
+                log.info('Filtering the ' + path + ' xml file')
+                filter_xml(path)
 
 def process_core():
     log.info('Processing the core')
