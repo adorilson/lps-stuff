@@ -30,16 +30,26 @@ def setup_project(product):
     log.info(android + params)
     os.system(android + params)
     
-    files = ['.classpath', '.project']
+    files = ['.classpath', '.project', 'AndroidManifest.xml']
     for f in files:
         params = {'file': f, 'product': confs['product']}
         copiar = 'cp ./%(file)s ../%(product)s/' % params
         os.system(copiar)
-        
+    
+    # Changes in .project file
     tree = etree.parse("../%(product)s/.project" % confs)
     name = tree.find('name')
     name.text = confs['product']
     file1 = open("../%(product)s/.project" % confs, 'wb')
+    xml = [b'<?xml version="1.0" encoding="UTF-8"?>\n'] + etree.tostringlist(tree)
+    file1.writelines(xml)
+    file1.close()
+    
+    # Changes in AndroidManifest.xml file
+    tree = etree.parse("../%(product)s/AndroidManifest.xml" % confs)
+    root = tree.getroot()
+    root.attrib['package'] += '.' + confs['product']
+    file1 = open("../%(product)s/AndroidManifest.xml" % confs, 'wb')
     xml = [b'<?xml version="1.0" encoding="UTF-8"?>\n'] + etree.tostringlist(tree)
     file1.writelines(xml)
     file1.close()
