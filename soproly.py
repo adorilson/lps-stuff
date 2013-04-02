@@ -8,11 +8,12 @@ log.basicConfig(
     format = '%(message)s'
 )
 
+import os
+import shutil
 import sys
 sys.path.append('.')
 
 from subprocess import call
-import os
 from lxml import etree
 
 import configspl
@@ -23,12 +24,13 @@ def setup_project(product):
     confs = {'product': product}
     log.info("Creating project to %(product)s product." % confs)
     android = configspl.sdkdir + "/tools/android "
-    # TODO generalize the activity and the package params
+    # These acitivity and package params will be rewrite
     params = "create project --target 1 --name %(product)s \
---path ../%(product)s --activity MMUnBActivity \
---package br.unb.mobileMedia.%(product)s" % confs
+--path ../%(product)s --activity MainActivity \
+--package br.ufrn.dimap.%(product)s" % confs
     log.info(android + params)
     os.system(android + params)
+    shutil.rmtree("../%(product)s/src/br/ufrn" % confs)
     
     files = ['.classpath', '.project', 'AndroidManifest.xml']
     for f in files:
