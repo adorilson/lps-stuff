@@ -73,32 +73,15 @@ def main_activity():
     # atualizar AndroidManifest
     # atualizar res/main.xml
 
-def fix_package(path, file_):
-    log.info('\t ' + file_)
-    full_file = path + '/' + file_
-    data = open(full_file).readlines()
-    end = '.' + path[path.rfind('/')+1:] + ';'
-    if not full_file in fixed_package:
-        data[0] = data[0].replace(';', end)
-        o = open(path + '/' + file_,"w")
-        o.writelines(data)
-        o.close()
-        fixed_package.append(full_file)
-
-def fix_imports(path, file_):
+def fix_packages(path, file_):
     full_file = path + '/' + file_
     
     if full_file in fixed_imports:
         return
-        
-    data = open(full_file).readlines()
-    old_import = 'import ' + path[path.rfind('src/')+4: path.rfind('/')].replace('/', '.')
-    while old_import.count('.') > 2:
-        old_import = old_import[:old_import.rfind('.')]
-    for i, line in enumerate(data):
-        if line.find(old_import)>-1:
-            new_import = line[:line.rfind('.')+1]  + path[path.rfind('/')+1:] + line[line.rfind('.'):]
-            data[i] = new_import
+    
+    data = open(full_file).read().\
+            replace(configspl.DEFAULT_SRC_DIR.replace('/', '.')[:len(configspl.DEFAULT_SRC_DIR)-1],
+                    configspl.DEFAULT_SRC_DIR.replace('/', '.') + '%(product)s' % confs)
     o = open(path + '/' + file_,"w")
     o.writelines(data)
     o.close()
@@ -107,15 +90,18 @@ def fix_imports(path, file_):
 def fix_files(path):
     log.info('Fixing the file''s packages')
     for file_ in os.listdir(path):
-        fix_package(path, file_)
-        fix_imports(path, file_)
+        fix_packages(path, file_)
 
 def add_srcfiles(files):
     log.info('Copying source files')
     for file_ in files:
         log.info('Copying %s' % file_)
-        new_path = file_[:file_.rfind('/')+1]  + confs['product']
+        new_path = file_[:file_.rfind('/')+1]
+        
         new_dir = '../%(product)s/src/' % confs +'%s' % new_path
+        new_dir = new_dir.replace(configspl.DEFAULT_SRC_DIR,
+                                    configspl.DEFAULT_SRC_DIR + '/%(product)s/' % confs)
+        log.info('New dir = %s' % new_dir)
         mkdir = 'mkdir -p %s' % new_dir 
         os.system(mkdir)
         cmd = 'cp src/' + file_ + ' ' + new_dir
