@@ -90,7 +90,8 @@ def fix_packages(path, file_):
 def fix_files(path):
     log.info('Fixing the file''s packages')
     for file_ in os.listdir(path):
-        fix_packages(path, file_)
+        if file_.endswith('.java'):
+            fix_packages(path, file_)
 
 def add_srcfiles(files):
     log.info('Copying source files')
