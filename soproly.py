@@ -90,7 +90,8 @@ def fix_packages(path, file_):
 def fix_files(path):
     log.info('Fixing the file''s packages')
     for file_ in os.listdir(path):
-        fix_packages(path, file_)
+        if file_.endswith('.java'):
+            fix_packages(path, file_)
 
 def add_srcfiles(files):
     log.info('Copying source files')
@@ -108,6 +109,14 @@ def add_srcfiles(files):
         os.system(cmd)
         fix_files(new_dir)
 
+def add_libfiles(files):
+    log.info('Copying library files')
+    for file_ in files:
+        log.info('Copying %s' % file_)
+        new_dir = '../%(product)s/libs/' % confs
+        cmd = 'cp libs/' + file_ + ' ' + new_dir
+        os.system(cmd)
+
 def add_feature(feature):
     log.info('Add the %s' % (feature))
     log.info(configspl.features[feature])
@@ -116,6 +125,8 @@ def add_feature(feature):
         add_srcfiles(params['srcfiles'])
     if 'resfiles' in params:
         add_resfiles(params['resfiles'])
+    if 'libfiles' in params:
+        add_libfiles(params['libfiles'])
 
 FEATURE_BEGIN = 'FEATURE BEGIN'
 FEATURE_END = 'FEATURE END'
